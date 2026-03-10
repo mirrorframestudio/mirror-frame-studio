@@ -87,8 +87,9 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 
 /* ========== HERO ========== */
 .hero{position:relative;min-height:100vh;background:var(--navy-dark);display:flex;align-items:center;overflow:hidden;padding-top:80px}
-.hero-video{position:absolute;top:0;left:50%;height:100%;transform:translateX(-50%);object-fit:contain;z-index:0;opacity:.3}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(170deg,rgba(10,26,46,.85) 0%,rgba(15,37,64,.75) 50%,rgba(22,45,74,.8) 100%);z-index:1}
+.hero-video-bg{position:absolute;inset:0;z-index:0}
+.hero-video-bg video{width:100%;height:100%;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,26,46,.92) 0%,rgba(10,26,46,.75) 40%,rgba(10,26,46,.3) 100%);z-index:1}
 .hero::before{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(200,168,75,.06) 0%,transparent 70%);pointer-events:none}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .hero .container{position:relative;z-index:3}
@@ -98,17 +99,10 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .hero h1 .gold-line{color:var(--gold);display:block}
 .hero p{font-size:1.2rem;color:rgba(255,255,255,.75);margin-bottom:36px;max-width:500px;line-height:1.8}
 .hero-cta-row{display:flex;gap:16px;flex-wrap:wrap}
-
-/* Hero Mirror Mockup */
-.hero-mirror-wrap{display:flex;justify-content:center;align-items:center;position:relative}
-.hero-phone{width:260px;height:480px;background:linear-gradient(180deg,#1a1a1a 0%,#111 100%);border-radius:36px;padding:8px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(200,168,75,.15);transition:transform .5s ease-out;transform-style:preserve-3d}
-.hero-phone-inner{width:100%;height:100%;background:linear-gradient(180deg,#fafafa,#f0f0f0);border-radius:30px;overflow:hidden;position:relative}
-.hero-phone .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:80px;height:22px;background:#1a1a1a;border-radius:0 0 14px 14px;z-index:5}
-.hero-phone .ig-header{padding:32px 14px 8px;display:flex;align-items:center;gap:8px;font-size:.7rem;font-weight:600;color:#262626}
-.hero-phone .ig-header .avatar-ring{width:30px;height:30px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center}
-.hero-phone .ig-header .avatar-ring .avatar-inner{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark))}
-.hero-phone .mirror-surface{height:52%;background:linear-gradient(160deg,rgba(200,168,75,.15),rgba(255,255,255,.4),rgba(200,168,75,.1));position:relative;overflow:hidden}
-.hero-phone .mirror-surface::after{content:'';position:absolute;top:-30%;left:-30%;width:160%;height:160%;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);animation:shimmer 4s ease-in-out infinite}
+/* Hero video side (visible on desktop) */
+.hero-video-side{display:flex;justify-content:center;align-items:center}
+.hero-video-frame{width:300px;height:520px;border-radius:32px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(200,168,75,.2);border:3px solid rgba(200,168,75,.25);position:relative}
+.hero-video-frame video{width:100%;height:100%;object-fit:cover}
 @keyframes shimmer{0%,100%{transform:translateX(-30%)}50%{transform:translateX(30%)}}
 .hero-phone .ig-actions{padding:10px 14px;display:flex;gap:12px;font-size:1rem;color:#262626}
 .hero-phone .ig-actions span{cursor:default}
@@ -333,7 +327,8 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .hero-grid{grid-template-columns:1fr;text-align:center}
   .hero p{margin:0 auto 36px}
   .hero-cta-row{justify-content:center}
-  .hero-mirror-wrap{margin-top:40px}
+  .hero-video-side{margin-top:32px}
+  .hero-video-frame{width:220px;height:380px;border-radius:24px}
   .editor-layout{grid-template-columns:1fr}
   .editor-sidebar{position:static;max-height:none}
   .mirror-preview-area{margin-top:40px}
@@ -362,7 +357,8 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .benefit-highlight-card img{width:100%;height:180px}
   .section-padding{padding:60px 0}
   .hero{padding-top:70px;min-height:auto;padding-bottom:60px}
-  .hero-phone{width:220px;height:400px}
+  .hero-overlay{background:linear-gradient(to bottom,rgba(10,26,46,.9) 0%,rgba(10,26,46,.6) 50%,rgba(10,26,46,.85) 100%)}
+  .hero-video-frame{width:200px;height:350px;border-radius:20px}
   .mirror-phone{width:300px}
   .mirror-surface-main{height:280px}
   /* Disable 3D tilt on touch devices */
@@ -448,10 +444,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 
 <!-- ========== HERO ========== -->
 <section class="hero" id="hero">
-  <!-- Video Background -->
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="videos/hero-bg.mp4" type="video/mp4">
-  </video>
+  <!-- Video Background (subtle, covers full hero) -->
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="videos/hero-bg.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-particles" id="particles"></div>
   <div class="container">
@@ -468,22 +466,11 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
           <a href="#contact" class="btn btn-outline">צרו קשר</a>
         </div>
       </div>
-      <div class="hero-mirror-wrap">
-        <div class="hero-phone">
-          <div class="notch"></div>
-          <div class="hero-phone-inner">
-            <div class="ig-header">
-              <div class="avatar-ring"><div class="avatar-inner"></div></div>
-              <div><strong>your_business</strong><br><span style="font-weight:400;font-size:.6rem;color:#999">תל אביב, ישראל</span></div>
-            </div>
-            <div class="mirror-surface" style="height:52%"></div>
-            <div class="ig-actions">
-              <span>♡</span> <span>💬</span> <span>↗</span>
-            </div>
-            <div class="ig-stats" style="font-size:.6rem">1,234 likes</div>
-            <div class="ig-caption"><b>your_business</b> ✨ Come visit us!</div>
-            <div class="home-indicator"></div>
-          </div>
+      <div class="hero-video-side">
+        <div class="hero-video-frame">
+          <video autoplay muted loop playsinline>
+            <source src="videos/hero-bg.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -1199,22 +1186,22 @@ if(editorPhone&&mirrorPhone){
   });
 }
 
-// ========== HERO PHONE 3D TILT ==========
-const heroPhone=document.querySelector('.hero-phone');
-if(heroPhone){
-  const heroWrap=document.querySelector('.hero-mirror-wrap');
-  heroWrap.addEventListener('mousemove',e=>{
-    const rect=heroWrap.getBoundingClientRect();
+// ========== HERO VIDEO FRAME 3D TILT ==========
+const heroFrame=document.querySelector('.hero-video-frame');
+if(heroFrame){
+  const heroSide=document.querySelector('.hero-video-side');
+  heroSide.style.perspective='800px';
+  heroSide.addEventListener('mousemove',e=>{
+    const rect=heroSide.getBoundingClientRect();
     const x=(e.clientX-rect.left)/rect.width-.5;
     const y=(e.clientY-rect.top)/rect.height-.5;
-    heroPhone.style.transform=`rotateY(${x*20}deg) rotateX(${-y*15}deg) translateZ(20px)`;
-    heroPhone.style.transition='transform .1s ease-out';
+    heroFrame.style.transform=`rotateY(${x*18}deg) rotateX(${-y*12}deg)`;
+    heroFrame.style.transition='transform .1s ease-out';
   });
-  heroWrap.addEventListener('mouseleave',()=>{
-    heroPhone.style.transform='';
-    heroPhone.style.transition='transform .6s ease-out';
+  heroSide.addEventListener('mouseleave',()=>{
+    heroFrame.style.transform='';
+    heroFrame.style.transition='transform .5s ease-out';
   });
-  heroWrap.style.perspective='800px';
 }
 
 // ========== FAQ ACCORDION ==========
