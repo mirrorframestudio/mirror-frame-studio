@@ -1289,27 +1289,24 @@ function handlePhoto(e){
 // ========== FORM ==========
 function handleSubmit(e){
   e.preventDefault();
-  const data={
-    business:document.getElementById('form-business').value,
-    name:document.getElementById('form-name').value,
-    phone:document.getElementById('form-phone').value,
-    type:document.getElementById('form-type').value,
-    timestamp:new Date().toISOString()
-  };
+  const business=document.getElementById('form-business').value;
+  const name=document.getElementById('form-name').value;
+  const phone=document.getElementById('form-phone').value;
+  const typeEl=document.getElementById('form-type');
+  const typeText=typeEl.options[typeEl.selectedIndex].text;
+
   // Store in localStorage
   const leads=JSON.parse(localStorage.getItem('mirror_leads')||'[]');
-  leads.push(data);
+  leads.push({business,name,phone,type:typeEl.value,timestamp:new Date().toISOString()});
   localStorage.setItem('mirror_leads',JSON.stringify(leads));
 
   // Show thank you
   document.getElementById('lead-form').style.display='none';
   document.getElementById('thank-you').style.display='block';
 
-  // WhatsApp redirect after delay
-  setTimeout(()=>{
-    const msg=encodeURIComponent(`היי, אני ${data.name} מ${data.business}. אשמח לשמוע על המראות הממותגות שלכם!`);
-    window.open(`https://wa.me/972503755705?text=${msg}`,'_blank');
-  },1500);
+  // Open WhatsApp immediately with full details
+  const msg=encodeURIComponent(`היי, אני מתעניין/ת במראה ממותגת 🪞\n\nשם העסק: ${business}\nשם: ${name}\nטלפון: ${phone}\nסוג עסק: ${typeText}\n\nאשמח לשמוע פרטים נוספים!`);
+  window.open(`https://wa.me/972503755705?text=${msg}`,'_blank');
 }
 
 // Smooth scroll for anchor links
