@@ -231,7 +231,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .ig-post-location{font-size:.65rem;color:#8e8e8e;margin-top:1px}
 .ig-post-more{font-size:1.1rem;color:#262626;cursor:default;letter-spacing:2px}
 /* The mirror image area — acrylic reflective */
-.mirror-surface{position:relative;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:all .4s ease;aspect-ratio:50/60;
+.mirror-surface{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:all .4s ease;margin:0 auto;
   background:linear-gradient(165deg,#e8edf4 0%,#d4dce8 15%,#c8d4e4 30%,#bcc8dc 50%,#d0daea 70%,#e0e8f2 85%,#eef2f8 100%)}
 .mirror-surface::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35) 0%,transparent 40%,transparent 60%,rgba(255,255,255,.12) 100%);pointer-events:none;z-index:1}
 .mirror-surface::after{content:'';position:absolute;top:-30%;left:-20%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(255,255,255,.3),transparent 70%);pointer-events:none;z-index:1;transform:rotate(-15deg)}
@@ -1320,11 +1320,23 @@ function updateCustomSize(){
   const w=parseInt(document.getElementById('ed-width').value)||50;
   const h=parseInt(document.getElementById('ed-height').value)||60;
   const surface=document.getElementById('mirror-surface');
-  surface.style.aspectRatio=w+' / '+h;
+  const shell=document.querySelector('.iphone-shell');
+  // Get available width inside shell
+  const maxW=shell?shell.offsetWidth:380;
+  // Scale so largest dimension fits nicely (max 100% width, max 500px height)
+  const maxH=500;
+  const scaleW=maxW/w;
+  const scaleH=maxH/h;
+  const scale=Math.min(scaleW,scaleH);
+  const pxW=Math.round(w*scale);
+  const pxH=Math.round(h*scale);
+  surface.style.width=pxW+'px';
+  surface.style.height=pxH+'px';
   document.getElementById('mirror-size-label').textContent=w+'×'+h+' ס״מ';
 }
 // Set initial size on load
 updateCustomSize();
+window.addEventListener('resize',updateCustomSize);
 
 function updateMirror(){
   const dn=document.getElementById('ed-displayname').value;
