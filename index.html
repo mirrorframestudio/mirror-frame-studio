@@ -209,46 +209,31 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 
 .editor-cta{text-align:center;margin-top:32px}
 
-/* Mirror Preview */
+/* Mirror Preview — Real mirror image with overlays */
 .mirror-preview-area{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:600px;position:relative}
-.mirror-phone{width:340px;background:#111;border-radius:44px;padding:10px;position:relative;transition:box-shadow .5s ease}
-.mirror-phone-screen{background:#fafafa;border-radius:36px;overflow:hidden;position:relative}
-.mirror-notch{width:100px;height:26px;background:#111;border-radius:0 0 16px 16px;margin:0 auto;position:relative;z-index:5}
-.mirror-status-bar{display:flex;justify-content:space-between;align-items:center;padding:4px 20px 0;font-size:.6rem;color:#333;font-weight:600;margin-top:-22px;position:relative;z-index:4}
-/* IG Header */
-.mirror-ig-header{display:flex;align-items:center;padding:10px 14px;gap:10px;border-bottom:1px solid #efefef}
-.mirror-avatar-ring{width:38px;height:38px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:2px;flex-shrink:0}
-.mirror-avatar-inner{width:100%;height:100%;border-radius:50%;background:#e0e0e0;border:2px solid #fff;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#999}
-.mirror-avatar-inner img{width:100%;height:100%;object-fit:cover}
-.mirror-header-text{flex:1;min-width:0}
-.mirror-header-text .display-name{font-size:.82rem;font-weight:700;color:#262626;display:flex;align-items:center;gap:4px}
-.mirror-header-text .display-name .verified{width:14px;height:14px;display:none}
-.mirror-header-text .location-text{font-size:.68rem;color:#666;margin-top:-1px}
-.mirror-header-menu{font-size:1.2rem;color:#262626;letter-spacing:2px;cursor:default}
-
-/* Mirror Surface */
-.mirror-surface-main{height:340px;background:linear-gradient(160deg,#e8e0d0 0%,#f5f0e8 20%,#fff 40%,#f0ece4 60%,#e0d8c8 80%,#d8d0c0 100%);position:relative;overflow:hidden}
-.mirror-surface-main::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 20%,rgba(255,255,255,.5) 45%,rgba(255,255,255,.7) 50%,rgba(255,255,255,.5) 55%,transparent 80%);animation:mirrorShine 6s ease-in-out infinite;pointer-events:none}
-@keyframes mirrorShine{0%,100%{opacity:.3;transform:translateX(-30%) rotate(-5deg)}50%{opacity:.8;transform:translateX(30%) rotate(5deg)}}
-.mirror-surface-main::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(255,255,255,.4),transparent 60%);pointer-events:none}
-.mirror-qr{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:60px;height:60px;background:rgba(255,255,255,.85);border-radius:8px;display:none;align-items:center;justify-content:center;padding:6px}
-.mirror-qr svg{width:100%;height:100%}
-
-/* IG Actions */
-.mirror-ig-actions{padding:10px 14px 4px;display:flex;align-items:center;gap:14px}
-.mirror-ig-actions .ig-icon{font-size:1.3rem;cursor:default;transition:transform .2s}
-.mirror-ig-actions .ig-icon:hover{transform:scale(1.2)}
-.mirror-ig-actions .save-icon{margin-right:auto}
-.mirror-ig-stats{padding:2px 14px;font-size:.78rem;font-weight:700;color:#262626}
-.mirror-ig-caption{padding:4px 14px 8px;font-size:.75rem;color:#262626;line-height:1.5}
-.mirror-ig-caption b{font-weight:700}
-
-/* IG Bottom Nav */
-.mirror-ig-nav{display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #efefef;font-size:1.1rem;color:#262626}
-.mirror-ig-nav span{cursor:default;opacity:.6;transition:opacity .2s}
-.mirror-ig-nav span:first-child{opacity:1}
-
-.mirror-home-indicator{width:70px;height:4px;background:#333;border-radius:2px;margin:8px auto 4px}
+.mirror-real{position:relative;width:380px;border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15),0 0 60px rgba(200,168,75,.1);transition:box-shadow .5s ease}
+.mirror-real-img{width:100%;display:block;border-radius:28px}
+/* Overlay elements positioned on top of real mirror image */
+.mirror-overlay{position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none}
+.mirror-ol-header{display:flex;align-items:center;padding:9% 5% 0;gap:6px}
+.mirror-ol-avatar{width:9%;aspect-ratio:1;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:2px;flex-shrink:0;overflow:hidden}
+.mirror-ol-avatar-inner{width:100%;height:100%;border-radius:50%;background:#e0e0e0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.mirror-ol-avatar-inner img{width:100%;height:100%;object-fit:cover}
+.mirror-ol-header-text{flex:1}
+.mirror-ol-displayname{font-size:clamp(.6rem,2vw,.82rem);font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);display:flex;align-items:center;gap:3px}
+.mirror-ol-displayname .verified{width:12px;height:12px;display:none}
+.mirror-ol-location{font-size:clamp(.5rem,1.5vw,.65rem);color:rgba(255,255,255,.8);text-shadow:0 1px 3px rgba(0,0,0,.5)}
+/* Mirror surface area — flexible space */
+.mirror-ol-surface{flex:1;position:relative}
+.mirror-ol-qr{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);width:12%;aspect-ratio:1;background:rgba(255,255,255,.85);border-radius:6px;display:none;align-items:center;justify-content:center;padding:4px}
+.mirror-ol-qr svg{width:100%;height:100%}
+/* Bottom IG elements */
+.mirror-ol-bottom{padding:0 5% 5%}
+.mirror-ol-actions{display:flex;align-items:center;gap:10px;font-size:clamp(.8rem,2.5vw,1.1rem);color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);margin-bottom:4px}
+.mirror-ol-actions .save-icon{margin-right:auto}
+.mirror-ol-stats{font-size:clamp(.55rem,1.5vw,.72rem);font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);margin-bottom:3px}
+.mirror-ol-caption{font-size:clamp(.55rem,1.5vw,.7rem);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);line-height:1.4}
+.mirror-ol-caption b{font-weight:700}
 
 /* ========== MATERIALS ========== */
 .materials{background:var(--white)}
@@ -272,17 +257,29 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .proof-slider{position:relative;max-width:800px;margin:0 auto;overflow:hidden}
 .proof-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .proof-card{min-width:100%;padding:48px;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.2);border-radius:24px;flex-shrink:0;box-sizing:border-box}
-.proof-card .quote-mark{font-size:4rem;color:var(--gold);line-height:1;font-family:'Playfair Display',serif}
-.proof-card p{font-size:1.15rem;color:rgba(255,255,255,.85);line-height:1.8;margin:16px 0 20px}
+.proof-card .quote-mark{font-size:3rem;color:var(--gold);line-height:1;font-family:'Playfair Display',serif}
+.proof-card p{font-size:1.05rem;color:rgba(255,255,255,.85);line-height:1.8;margin:12px 0 16px}
 .proof-card .author{color:var(--gold);font-weight:700;font-size:1rem}
 .proof-card .author-role{color:rgba(255,255,255,.5);font-size:.85rem;margin-top:4px}
-.proof-stars{color:var(--gold);font-size:1.2rem;letter-spacing:2px;margin-top:12px}
+.proof-stars{color:var(--gold);font-size:1.1rem;letter-spacing:2px;margin-top:10px}
 .proof-nav{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:32px}
 .proof-dots{display:flex;gap:8px}
 .proof-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s}
 .proof-dot.active{background:var(--gold);transform:scale(1.3)}
-.proof-arrow{width:40px;height:40px;border-radius:50%;background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.3);color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all .3s}
+.proof-arrow{width:44px;height:44px;border-radius:50%;background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.3);color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all .3s}
 .proof-arrow:hover{background:var(--gold);color:var(--navy)}
+@media(max-width:768px){
+  .proof-card{padding:24px 20px;border-radius:16px}
+  .proof-card .quote-mark{font-size:2rem}
+  .proof-card p{font-size:.9rem;line-height:1.7;margin:8px 0 12px}
+  .proof-card .author{font-size:.9rem}
+  .proof-card .author-role{font-size:.75rem}
+  .proof-stars{font-size:.9rem}
+  .proof-nav{margin-top:20px;gap:12px}
+  .proof-arrow{width:36px;height:36px;font-size:.9rem}
+  .proof-dot{width:8px;height:8px}
+  .mirror-real{width:100%;max-width:320px}
+}
 .proof-bottom{margin-top:48px}
 .proof-bottom p{font-size:1.4rem;font-weight:700;margin-bottom:24px}
 
@@ -363,8 +360,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .hero{padding-top:70px;min-height:auto;padding-bottom:60px}
   .hero-mirror-img{max-width:260px;border-radius:16px}
   .hero-mirror-glow{inset:-12px}
-  .mirror-phone{width:300px}
-  .mirror-surface-main{height:280px}
+  .mirror-real{width:100%;max-width:300px}
   /* Disable 3D tilt on touch devices */
   .tilt-card:hover{transform:translateY(-6px)!important}
   /* Hero CTA buttons stack on mobile */
@@ -390,8 +386,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .target-grid{grid-template-columns:1fr}
   .materials-grid{grid-template-columns:1fr}
   .form-card{padding:28px 20px}
-  .mirror-phone{width:260px}
-  .mirror-surface-main{height:240px}
+  .mirror-real{max-width:260px}
   .flow-img img{max-width:240px}
   .hero h1{font-size:clamp(1.8rem,7vw,2.4rem)}
   .hero p{font-size:1rem}
@@ -759,88 +754,45 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
         </div>
       </div>
 
-      <!-- Mirror Preview -->
+      <!-- Mirror Preview — Real mirror image -->
       <div class="mirror-preview-area">
-        <div class="mirror-phone" id="mirror-phone">
-          <div class="mirror-phone-screen">
-            <div class="mirror-notch"></div>
-            <div class="mirror-status-bar">
-              <span>9:41</span>
-              <span>●●● WiFi 🔋</span>
-            </div>
-            <!-- IG Header -->
-            <div class="mirror-ig-header">
-              <div class="mirror-avatar-ring">
-                <div class="mirror-avatar-inner" id="mirror-avatar">
-                  <span id="avatar-placeholder">📷</span>
-                  <img id="avatar-img" src="" alt="" style="display:none">
+        <div class="mirror-real" id="mirror-real">
+          <img class="mirror-real-img" src="images/Gemini_Generated_Image_z8jir3z8jir3z8ji.png" alt="מראה ממותגת">
+          <div class="mirror-overlay">
+            <!-- IG Header on mirror -->
+            <div class="mirror-ol-header">
+              <div class="mirror-ol-avatar">
+                <div class="mirror-ol-avatar-inner" id="mirror-avatar">
+                  <span id="avatar-placeholder" style="font-size:.6rem">📷</span>
+                  <img id="avatar-img" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover">
                 </div>
               </div>
-              <div class="mirror-header-text">
-                <div class="display-name">
+              <div class="mirror-ol-header-text">
+                <div class="mirror-ol-displayname">
                   <span id="mirror-displayname">Mirror Frame Studio</span>
                   <svg id="mirror-verified" class="verified" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg>
                 </div>
-                <div class="location-text" id="mirror-location">תל אביב, ישראל</div>
-              </div>
-              <div class="mirror-header-menu">•••</div>
-            </div>
-            <!-- Mirror Surface -->
-            <div class="mirror-surface-main">
-              <div class="mirror-qr" id="mirror-qr">
-                <svg viewBox="0 0 100 100" fill="#333">
-                  <rect x="5" y="5" width="25" height="25" rx="3"/>
-                  <rect x="70" y="5" width="25" height="25" rx="3"/>
-                  <rect x="5" y="70" width="25" height="25" rx="3"/>
-                  <rect x="10" y="10" width="15" height="15" rx="2" fill="white"/>
-                  <rect x="75" y="10" width="15" height="15" rx="2" fill="white"/>
-                  <rect x="10" y="75" width="15" height="15" rx="2" fill="white"/>
-                  <rect x="13" y="13" width="9" height="9" rx="1" fill="#333"/>
-                  <rect x="78" y="13" width="9" height="9" rx="1" fill="#333"/>
-                  <rect x="13" y="78" width="9" height="9" rx="1" fill="#333"/>
-                  <rect x="38" y="5" width="8" height="8" rx="1"/>
-                  <rect x="50" y="5" width="8" height="8" rx="1"/>
-                  <rect x="38" y="17" width="8" height="8" rx="1"/>
-                  <rect x="55" y="17" width="8" height="8" rx="1"/>
-                  <rect x="38" y="38" width="8" height="8" rx="1"/>
-                  <rect x="50" y="38" width="8" height="8" rx="1"/>
-                  <rect x="62" y="38" width="8" height="8" rx="1"/>
-                  <rect x="38" y="50" width="8" height="8" rx="1"/>
-                  <rect x="55" y="55" width="8" height="8" rx="1"/>
-                  <rect x="70" y="50" width="8" height="8" rx="1"/>
-                  <rect x="82" y="50" width="8" height="8" rx="1"/>
-                  <rect x="70" y="62" width="8" height="8" rx="1"/>
-                  <rect x="82" y="62" width="8" height="8" rx="1"/>
-                  <rect x="38" y="70" width="8" height="8" rx="1"/>
-                  <rect x="50" y="70" width="8" height="8" rx="1"/>
-                  <rect x="70" y="78" width="25" height="17" rx="3"/>
-                  <rect x="75" y="83" width="15" height="7" rx="2" fill="white"/>
-                  <rect x="78" y="85" width="9" height="3" rx="1" fill="#333"/>
-                </svg>
+                <div class="mirror-ol-location" id="mirror-location">תל אביב, ישראל</div>
               </div>
             </div>
-            <!-- IG Actions -->
-            <div class="mirror-ig-actions">
-              <span class="ig-icon">♡</span>
-              <span class="ig-icon">💬</span>
-              <span class="ig-icon">↗️</span>
-              <span class="ig-icon save-icon">🔖</span>
+            <!-- Mirror surface (flexible space) -->
+            <div class="mirror-ol-surface">
+              <div class="mirror-ol-qr" id="mirror-qr">
+                <svg viewBox="0 0 100 100" fill="#333"><rect x="5" y="5" width="25" height="25" rx="3"/><rect x="70" y="5" width="25" height="25" rx="3"/><rect x="5" y="70" width="25" height="25" rx="3"/><rect x="13" y="13" width="9" height="9" rx="1"/><rect x="78" y="13" width="9" height="9" rx="1"/><rect x="13" y="78" width="9" height="9" rx="1"/></svg>
+              </div>
             </div>
-            <div class="mirror-ig-stats">
-              <span id="mirror-likes">1,234</span> likes · <span id="mirror-comments">56</span> comments · <span id="mirror-shares">23</span> shares · <span id="mirror-saves">89</span> saves
+            <!-- Bottom IG elements -->
+            <div class="mirror-ol-bottom">
+              <div class="mirror-ol-actions">
+                <span>♡</span> <span>💬</span> <span>↗</span> <span class="save-icon">🔖</span>
+              </div>
+              <div class="mirror-ol-stats">
+                <span id="mirror-likes">1,234</span> likes · <span id="mirror-comments">56</span> comments
+              </div>
+              <div class="mirror-ol-caption">
+                <b id="mirror-username">mirror_frame_studio</b> <span id="mirror-caption">✨ בואו לבקר אותנו!</span>
+              </div>
             </div>
-            <div class="mirror-ig-caption">
-              <b id="mirror-username">mirror_frame_studio</b> <span id="mirror-caption">✨ בואו לבקר אותנו!</span>
-            </div>
-            <!-- IG Nav -->
-            <div class="mirror-ig-nav">
-              <span>🏠</span>
-              <span>🔍</span>
-              <span>➕</span>
-              <span>🎬</span>
-              <span>👤</span>
-            </div>
-            <div class="mirror-home-indicator"></div>
           </div>
         </div>
       </div>
@@ -1212,21 +1164,21 @@ document.querySelectorAll('.tilt-card').forEach(card=>{
   });
 });
 
-// ========== EDITOR PHONE 3D TILT ==========
-const editorPhone=document.querySelector('.mirror-preview-area');
-const mirrorPhone=document.querySelector('.mirror-phone');
-if(editorPhone&&mirrorPhone){
-  editorPhone.style.perspective='900px';
-  editorPhone.addEventListener('mousemove',e=>{
-    const rect=editorPhone.getBoundingClientRect();
+// ========== EDITOR MIRROR 3D TILT ==========
+const editorArea=document.querySelector('.mirror-preview-area');
+const mirrorReal=document.querySelector('.mirror-real');
+if(editorArea&&mirrorReal){
+  editorArea.style.perspective='900px';
+  editorArea.addEventListener('mousemove',e=>{
+    const rect=editorArea.getBoundingClientRect();
     const x=(e.clientX-rect.left)/rect.width-.5;
     const y=(e.clientY-rect.top)/rect.height-.5;
-    mirrorPhone.style.transform=`rotateY(${x*15}deg) rotateX(${-y*10}deg)`;
-    mirrorPhone.style.transition='transform .1s ease-out';
+    mirrorReal.style.transform=`rotateY(${x*12}deg) rotateX(${-y*8}deg)`;
+    mirrorReal.style.transition='transform .1s ease-out';
   });
-  editorPhone.addEventListener('mouseleave',()=>{
-    mirrorPhone.style.transform='';
-    mirrorPhone.style.transition='transform .5s ease-out';
+  editorArea.addEventListener('mouseleave',()=>{
+    mirrorReal.style.transform='';
+    mirrorReal.style.transition='transform .5s ease-out';
   });
 }
 
@@ -1302,8 +1254,6 @@ function updateMirror(){
   const verified=document.getElementById('ed-verified').checked;
   const likes=document.getElementById('ed-likes').value;
   const comments=document.getElementById('ed-comments').value;
-  const shares=document.getElementById('ed-shares').value;
-  const saves=document.getElementById('ed-saves').value;
   const caption=document.getElementById('ed-caption').value;
   const ledOn=document.getElementById('ed-led').checked;
   const qrOn=document.getElementById('ed-qr').checked;
@@ -1314,19 +1264,17 @@ function updateMirror(){
   document.getElementById('mirror-verified').style.display=verified?'inline':'none';
   document.getElementById('mirror-likes').textContent=likes;
   document.getElementById('mirror-comments').textContent=comments;
-  document.getElementById('mirror-shares').textContent=shares;
-  document.getElementById('mirror-saves').textContent=saves;
   document.getElementById('mirror-caption').textContent=caption;
 
   // LED
-  const phone=document.getElementById('mirror-phone');
+  const mirrorEl=document.getElementById('mirror-real');
   document.getElementById('led-options').style.display=ledOn?'block':'none';
   if(ledOn){
     const colors={warm:'rgba(255,170,68,.6)',neutral:'rgba(255,240,200,.6)',cool:'rgba(160,196,255,.6)'};
     const glows={warm:'rgba(255,136,0,.25)',neutral:'rgba(255,224,160,.25)',cool:'rgba(100,160,255,.25)'};
-    phone.style.boxShadow=`0 0 40px 15px ${colors[ledColor]}, 0 0 80px 30px ${glows[ledColor]}, 0 30px 80px rgba(0,0,0,.3)`;
+    mirrorEl.style.boxShadow=`0 0 40px 15px ${colors[ledColor]}, 0 0 80px 30px ${glows[ledColor]}, 0 20px 60px rgba(0,0,0,.15)`;
   }else{
-    phone.style.boxShadow='0 30px 80px rgba(0,0,0,.3)';
+    mirrorEl.style.boxShadow='0 20px 60px rgba(0,0,0,.15),0 0 60px rgba(200,168,75,.1)';
   }
 
   // QR
