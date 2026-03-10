@@ -215,6 +215,8 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .iphone-shell{position:relative;width:380px;transition:all .4s ease;border-radius:32px;overflow:hidden;
   box-shadow:0 30px 80px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.08)}
 .iphone-screen{background:#fff;overflow:hidden;position:relative}
+/* Dynamic Island */
+.dynamic-island{width:100px;height:28px;background:#000;border-radius:20px;margin:10px auto 0;position:relative;z-index:10}
 /* IG Top bar */
 .ig-topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 6px;background:#fff}
 .ig-topbar-logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:#262626;letter-spacing:-.5px}
@@ -236,9 +238,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .mirror-surface::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35) 0%,transparent 40%,transparent 60%,rgba(255,255,255,.12) 100%);pointer-events:none;z-index:1}
 .mirror-surface::after{content:'';position:absolute;top:-30%;left:-20%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(255,255,255,.3),transparent 70%);pointer-events:none;z-index:1;transform:rotate(-15deg)}
 .mirror-surface-text{font-size:.9rem;color:rgba(100,120,150,.3);font-weight:300;text-align:center;letter-spacing:1px;pointer-events:none;z-index:2}
-/* Front camera */
-.mirror-front-camera{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#4a4a5a,#1a1a2a 60%,#000 100%);box-shadow:0 0 0 2px rgba(60,60,80,.3),inset 0 0 2px rgba(255,255,255,.15);z-index:4}
-.mirror-front-camera::after{content:'';position:absolute;top:2px;left:2px;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.25)}
 .mirror-surface-qr{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:48px;height:48px;background:rgba(255,255,255,.85);border-radius:8px;display:none;align-items:center;justify-content:center;padding:5px;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:3}
 .mirror-surface-qr svg{width:100%;height:100%}
 /* LED glow on the mirror surface */
@@ -800,6 +799,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
       <div class="mirror-preview-area">
         <div class="iphone-shell">
           <div class="iphone-screen">
+            <div class="dynamic-island"></div>
             <!-- IG Top bar -->
             <div class="ig-topbar">
               <span class="ig-topbar-logo">Instagram</span>
@@ -830,7 +830,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
             <!-- THE MIRROR (acrylic reflective surface) -->
             <div class="mirror-surface" id="mirror-surface">
               <div class="mirror-surface-led" id="mirror-led"></div>
-              <div class="mirror-front-camera"></div>
               <span class="mirror-surface-text">🪞 כאן הלקוחות שלכם מצלמים סלפי</span>
               <div class="mirror-surface-qr" id="mirror-qr">
                 <svg viewBox="0 0 100 100" fill="#333"><rect x="5" y="5" width="25" height="25" rx="3"/><rect x="70" y="5" width="25" height="25" rx="3"/><rect x="5" y="70" width="25" height="25" rx="3"/><rect x="13" y="13" width="9" height="9" rx="1"/><rect x="78" y="13" width="9" height="9" rx="1"/><rect x="13" y="78" width="9" height="9" rx="1"/></svg>
