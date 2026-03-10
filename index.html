@@ -86,10 +86,13 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .section-subtitle{font-size:1.15rem;color:#666;max-width:600px;margin:0 auto 48px;line-height:1.8}
 
 /* ========== HERO ========== */
-.hero{position:relative;min-height:100vh;background:linear-gradient(170deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-light) 100%);display:flex;align-items:center;overflow:hidden;padding-top:80px}
+.hero{position:relative;min-height:100vh;background:var(--navy-dark);display:flex;align-items:center;overflow:hidden;padding-top:80px}
+.hero-video{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;transform:translate(-50%,-50%);object-fit:cover;z-index:0;opacity:.35}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(170deg,rgba(10,26,46,.85) 0%,rgba(15,37,64,.75) 50%,rgba(22,45,74,.8) 100%);z-index:1}
 .hero::before{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(200,168,75,.06) 0%,transparent 70%);pointer-events:none}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.hero-content{color:var(--white);z-index:2}
+.hero .container{position:relative;z-index:3}
+.hero-content{color:var(--white)}
 .hero-badge{display:inline-block;padding:8px 20px;border:1px solid rgba(200,168,75,.3);border-radius:30px;color:var(--gold);font-size:.85rem;font-weight:500;margin-bottom:24px;letter-spacing:1px}
 .hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.2;margin-bottom:20px}
 .hero h1 .gold-line{color:var(--gold);display:block}
@@ -115,7 +118,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .hero-phone .home-indicator{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:#ccc;border-radius:2px}
 
 /* Floating particles */
-.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
 .particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.3;animation:particleFloat 8s linear infinite}
 @keyframes particleFloat{0%{transform:translateY(100vh) scale(0);opacity:0}20%{opacity:.4}80%{opacity:.4}100%{transform:translateY(-10vh) scale(1);opacity:0}}
 
@@ -445,6 +448,11 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 
 <!-- ========== HERO ========== -->
 <section class="hero" id="hero">
+  <!-- Video Background -->
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="videos/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
   <div class="hero-particles" id="particles"></div>
   <div class="container">
     <div class="hero-grid">
