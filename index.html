@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mirror Frame Studio — המראה שמשווקת את העסק שלך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F2540;--navy-light:#162d4a;--navy-dark:#0a1a2e;
+  --gold:#C8A84B;--gold-light:#d4b85e;--gold-dark:#b8963a;
+  --white:#ffffff;--off-white:#f8f6f1;--gray:#e8e4dc;
+  --text-dark:#1a1a1a;--text-light:#b0b0b0;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--white);overflow-x:hidden;line-height:1.7}
+.playfair{font-family:'Playfair Display',serif}
+
+/* Utility */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.section-padding{padding:100px 0}
+.gold-text{color:var(--gold)}
+.navy-text{color:var(--navy)}
+.text-center{text-align:center}
+
+/* ========== FIXED NAVBAR ========== */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1001;padding:16px 0;transition:all .4s cubic-bezier(.4,0,.2,1);background:transparent}
+.navbar.scrolled{background:rgba(15,37,64,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:10px 0;box-shadow:0 4px 30px rgba(0,0,0,.3)}
+.navbar .container{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--white);font-weight:800;font-size:1.15rem}
+.nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-size:1rem;transition:transform .3s}
+.nav-logo:hover .nav-logo-icon{transform:rotate(-10deg) scale(1.1)}
+.nav-links{display:flex;align-items:center;gap:6px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.88rem;font-weight:500;padding:8px 14px;border-radius:10px;transition:all .3s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(200,168,75,.12)}
+.nav-links a.active::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:16px;height:2px;background:var(--gold);border-radius:1px}
+.nav-cta{padding:8px 22px!important;background:linear-gradient(135deg,var(--gold),var(--gold-light))!important;color:var(--navy)!important;font-weight:700!important;border-radius:50px!important;box-shadow:0 2px 12px rgba(200,168,75,.3)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(200,168,75,.5)!important}
+/* Mobile hamburger */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;z-index:1002}
+.nav-hamburger span{display:block;width:24px;height:2.5px;background:var(--white);border-radius:2px;transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(10,26,46,.98);backdrop-filter:blur(20px);z-index:1000;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.mobile-overlay.open{display:flex}
+.mobile-overlay a{color:var(--white);text-decoration:none;font-size:1.4rem;font-weight:600;padding:14px 40px;border-radius:14px;transition:all .3s;width:80%;max-width:300px;text-align:center}
+.mobile-overlay a:hover{background:rgba(200,168,75,.15);color:var(--gold)}
+
+/* Animations */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.15s}
+.reveal-delay-2{transition-delay:.3s}
+.reveal-delay-3{transition-delay:.45s}
+
+/* 3D Perspective Animations */
+.reveal-3d{opacity:0;transform:perspective(1000px) rotateY(15deg) translateX(60px);transition:all 1s cubic-bezier(.4,0,.2,1)}
+.reveal-3d.visible{opacity:1;transform:perspective(1000px) rotateY(0) translateX(0)}
+.reveal-3d-left{opacity:0;transform:perspective(1000px) rotateY(-15deg) translateX(-60px);transition:all 1s cubic-bezier(.4,0,.2,1)}
+.reveal-3d-left.visible{opacity:1;transform:perspective(1000px) rotateY(0) translateX(0)}
+.reveal-flip{opacity:0;transform:perspective(800px) rotateX(20deg) translateY(40px);transition:all .9s cubic-bezier(.4,0,.2,1)}
+.reveal-flip.visible{opacity:1;transform:perspective(800px) rotateX(0) translateY(0)}
+.reveal-zoom{opacity:0;transform:scale(.85);transition:all .8s cubic-bezier(.4,0,.2,1)}
+.reveal-zoom.visible{opacity:1;transform:scale(1)}
+/* Tilt on hover for cards */
+.tilt-card{transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s ease;transform-style:preserve-3d}
+.tilt-card:hover{transform:perspective(600px) rotateX(4deg) rotateY(-4deg) translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.12),0 0 30px rgba(200,168,75,.08)}
+
+/* Counter animation */
+.counter-num{display:inline-block;min-width:2ch;font-variant-numeric:tabular-nums}
+
+/* Buttons */
+.btn{display:inline-block;padding:16px 40px;border-radius:50px;font-weight:700;font-size:1.1rem;cursor:pointer;transition:all .3s ease;border:none;text-decoration:none;font-family:'Heebo',sans-serif}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);box-shadow:0 4px 20px rgba(200,168,75,.35)}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(200,168,75,.5)}
+.btn-outline{background:transparent;border:2px solid var(--gold);color:var(--gold)}
+.btn-outline:hover{background:var(--gold);color:var(--navy);transform:translateY(-3px)}
+.btn-navy{background:var(--navy);color:var(--white);box-shadow:0 4px 20px rgba(15,37,64,.3)}
+.btn-navy:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(15,37,64,.5)}
+
+/* Section titles */
+.section-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:16px;line-height:1.3}
+.section-subtitle{font-size:1.15rem;color:#666;max-width:600px;margin:0 auto 48px;line-height:1.8}
+
+/* ========== HERO ========== */
+.hero{position:relative;min-height:100vh;background:linear-gradient(170deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-light) 100%);display:flex;align-items:center;overflow:hidden;padding-top:80px}
+.hero::before{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(200,168,75,.06) 0%,transparent 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-content{color:var(--white);z-index:2}
+.hero-badge{display:inline-block;padding:8px 20px;border:1px solid rgba(200,168,75,.3);border-radius:30px;color:var(--gold);font-size:.85rem;font-weight:500;margin-bottom:24px;letter-spacing:1px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.2;margin-bottom:20px}
+.hero h1 .gold-line{color:var(--gold);display:block}
+.hero p{font-size:1.2rem;color:rgba(255,255,255,.75);margin-bottom:36px;max-width:500px;line-height:1.8}
+.hero-cta-row{display:flex;gap:16px;flex-wrap:wrap}
+
+/* Hero Mirror Mockup */
+.hero-mirror-wrap{display:flex;justify-content:center;align-items:center;position:relative}
+.hero-phone{width:260px;height:480px;background:linear-gradient(180deg,#1a1a1a 0%,#111 100%);border-radius:36px;padding:8px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(200,168,75,.15);transition:transform .5s ease-out;transform-style:preserve-3d}
+.hero-phone-inner{width:100%;height:100%;background:linear-gradient(180deg,#fafafa,#f0f0f0);border-radius:30px;overflow:hidden;position:relative}
+.hero-phone .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:80px;height:22px;background:#1a1a1a;border-radius:0 0 14px 14px;z-index:5}
+.hero-phone .ig-header{padding:32px 14px 8px;display:flex;align-items:center;gap:8px;font-size:.7rem;font-weight:600;color:#262626}
+.hero-phone .ig-header .avatar-ring{width:30px;height:30px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center}
+.hero-phone .ig-header .avatar-ring .avatar-inner{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark))}
+.hero-phone .mirror-surface{height:52%;background:linear-gradient(160deg,rgba(200,168,75,.15),rgba(255,255,255,.4),rgba(200,168,75,.1));position:relative;overflow:hidden}
+.hero-phone .mirror-surface::after{content:'';position:absolute;top:-30%;left:-30%;width:160%;height:160%;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%,100%{transform:translateX(-30%)}50%{transform:translateX(30%)}}
+.hero-phone .ig-actions{padding:10px 14px;display:flex;gap:12px;font-size:1rem;color:#262626}
+.hero-phone .ig-actions span{cursor:default}
+.hero-phone .ig-stats{padding:2px 14px;font-size:.65rem;font-weight:700;color:#262626}
+.hero-phone .ig-caption{padding:4px 14px;font-size:.6rem;color:#262626}
+.hero-phone .ig-caption b{font-weight:700}
+.hero-phone .home-indicator{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:#ccc;border-radius:2px}
+
+/* Floating particles */
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.3;animation:particleFloat 8s linear infinite}
+@keyframes particleFloat{0%{transform:translateY(100vh) scale(0);opacity:0}20%{opacity:.4}80%{opacity:.4}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+
+/* ========== HOW IT WORKS — FLOWCHART ========== */
+.how-it-works{background:var(--off-white);overflow:hidden}
+.flowchart{position:relative;max-width:900px;margin:0 auto}
+/* Vertical line */
+.flowchart::before{content:'';position:absolute;top:0;bottom:0;right:50%;width:3px;background:linear-gradient(180deg,var(--gold),var(--gold-dark));transform:translateX(50%);z-index:0}
+.flow-step{display:flex;align-items:center;gap:0;position:relative;margin-bottom:20px}
+.flow-step:last-child{margin-bottom:0}
+.flow-step:nth-child(odd){flex-direction:row-reverse}
+/* Image side */
+.flow-img{flex:1;padding:0 32px}
+.flow-img img{width:100%;max-width:360px;border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.1);display:block;aspect-ratio:4/3;object-fit:cover}
+.flow-step:nth-child(odd) .flow-img{display:flex;justify-content:flex-end}
+.flow-step:nth-child(even) .flow-img{display:flex;justify-content:flex-start}
+/* Center node */
+.flow-node{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;flex-shrink:0;z-index:2;box-shadow:0 4px 20px rgba(15,37,64,.3);border:4px solid var(--off-white)}
+/* Content side */
+.flow-content{flex:1;padding:0 32px}
+.flow-card{background:var(--white);border-radius:20px;padding:28px 32px;box-shadow:0 4px 24px rgba(0,0,0,.05);position:relative;transition:all .4s ease;border:2px solid transparent}
+.flow-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 40px rgba(200,168,75,.12)}
+.flow-card h3{font-size:1.25rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.flow-card p{color:#666;font-size:.95rem;line-height:1.7}
+/* Arrow connector from card to node */
+.flow-step:nth-child(odd) .flow-card::before{content:'';position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-right:12px solid var(--white)}
+.flow-step:nth-child(even) .flow-card::after{content:'';position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:12px solid var(--white)}
+/* Down arrow between steps */
+.flow-arrow{text-align:center;margin:4px 0;position:relative;z-index:2}
+.flow-arrow svg{width:32px;height:32px;fill:var(--gold);filter:drop-shadow(0 2px 6px rgba(200,168,75,.3));animation:bounceArrow 2s ease-in-out infinite}
+@keyframes bounceArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ========== BENEFITS ========== */
+.benefits{background:var(--white)}
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.benefit-card{background:var(--off-white);border-radius:20px;overflow:hidden;transition:all .4s ease;border:2px solid transparent}
+.benefit-card:hover{border-color:var(--gold);transform:translateY(-6px);box-shadow:0 16px 48px rgba(200,168,75,.12)}
+.benefit-img{width:100%;height:200px;object-fit:cover}
+.benefit-body{padding:24px 28px}
+.benefit-icon-badge{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:14px}
+.benefit-body h4{font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.benefit-body p{font-size:.9rem;color:#666;line-height:1.7}
+/* Wide benefit highlight row */
+.benefit-highlight{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:28px}
+.benefit-highlight-card{background:var(--navy);border-radius:20px;padding:40px;color:var(--white);display:flex;gap:24px;align-items:center;transition:all .4s ease}
+.benefit-highlight-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(15,37,64,.3)}
+.benefit-highlight-card img{width:180px;height:180px;border-radius:16px;object-fit:cover;flex-shrink:0}
+.benefit-highlight-text h4{font-size:1.25rem;font-weight:700;color:var(--gold);margin-bottom:10px}
+.benefit-highlight-text p{font-size:.95rem;color:rgba(255,255,255,.75);line-height:1.7}
+
+/* ========== MATH SECTION ========== */
+.math-section{background:var(--navy);color:var(--white);text-align:center;position:relative;overflow:hidden}
+.math-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='rgba(200,168,75,0.04)' stroke-width='1'/%3E%3C/svg%3E");pointer-events:none}
+.math-equation{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin:48px 0 32px;font-size:clamp(1rem,3vw,1.8rem);font-weight:700}
+.math-num{background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);padding:16px 28px;border-radius:16px;color:var(--gold);min-width:120px}
+.math-num .big{display:block;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;line-height:1}
+.math-num .label{font-size:.8rem;font-weight:400;color:rgba(255,255,255,.6);margin-top:4px;display:block}
+.math-op{color:var(--gold);font-size:2rem}
+.math-result{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);padding:20px 36px;border-radius:16px;box-shadow:0 8px 30px rgba(200,168,75,.3)}
+.math-result .big{display:block;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;line-height:1}
+.math-result .label{font-size:.8rem;font-weight:600;margin-top:4px;display:block}
+.math-bottom{font-size:1.3rem;color:var(--gold);font-weight:700;margin-top:8px}
+
+/* ========== MIRROR EDITOR ========== */
+.editor-section{background:var(--off-white);position:relative}
+.editor-layout{display:grid;grid-template-columns:400px 1fr;gap:48px;align-items:start}
+.editor-sidebar{background:var(--white);border-radius:20px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,.06);position:sticky;top:24px;max-height:90vh;overflow-y:auto}
+.editor-sidebar::-webkit-scrollbar{width:4px}
+.editor-sidebar::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+.editor-sidebar h3{font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--gold)}
+.field-group{margin-bottom:20px}
+.field-group label{display:block;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:6px}
+.field-group input[type="text"],
+.field-group textarea,
+.field-group select{width:100%;padding:12px 16px;border:2px solid #e8e4dc;border-radius:12px;font-family:'Heebo',sans-serif;font-size:.95rem;transition:border-color .3s;background:var(--white);color:var(--text-dark)}
+.field-group input:focus,
+.field-group textarea:focus{outline:none;border-color:var(--gold)}
+.field-group textarea{resize:vertical;min-height:60px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.toggle-row label{font-size:.9rem;font-weight:600;color:var(--navy)}
+.toggle{position:relative;width:50px;height:28px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;inset:0;background:#ccc;border-radius:14px;transition:.3s}
+.toggle .slider::before{content:'';position:absolute;bottom:3px;right:3px;width:22px;height:22px;background:white;border-radius:50%;transition:.3s}
+.toggle input:checked+.slider{background:var(--gold)}
+.toggle input:checked+.slider::before{transform:translateX(-22px)}
+.photo-upload{position:relative;width:100%;padding:24px;border:2px dashed #d0ccc4;border-radius:12px;text-align:center;cursor:pointer;transition:all .3s;background:#faf9f7}
+.photo-upload:hover{border-color:var(--gold);background:rgba(200,168,75,.04)}
+.photo-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.photo-upload .upload-icon{font-size:2rem;margin-bottom:4px}
+.photo-upload p{font-size:.8rem;color:#999}
+.led-colors{display:flex;gap:8px;margin-top:8px}
+.led-color-btn{width:40px;height:40px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:all .3s;position:relative}
+.led-color-btn.active{border-color:var(--navy);transform:scale(1.15)}
+.led-color-btn[data-color="warm"]{background:linear-gradient(135deg,#ffaa44,#ff8800)}
+.led-color-btn[data-color="neutral"]{background:linear-gradient(135deg,#fff5e0,#ffe0a0)}
+.led-color-btn[data-color="cool"]{background:linear-gradient(135deg,#e0eeff,#a0c4ff)}
+.led-label{font-size:.7rem;text-align:center;margin-top:4px;color:#888}
+
+.editor-cta{text-align:center;margin-top:32px}
+
+/* Mirror Preview */
+.mirror-preview-area{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:600px;position:relative}
+.mirror-phone{width:340px;background:#111;border-radius:44px;padding:10px;position:relative;transition:box-shadow .5s ease}
+.mirror-phone-screen{background:#fafafa;border-radius:36px;overflow:hidden;position:relative}
+.mirror-notch{width:100px;height:26px;background:#111;border-radius:0 0 16px 16px;margin:0 auto;position:relative;z-index:5}
+.mirror-status-bar{display:flex;justify-content:space-between;align-items:center;padding:4px 20px 0;font-size:.6rem;color:#333;font-weight:600;margin-top:-22px;position:relative;z-index:4}
+/* IG Header */
+.mirror-ig-header{display:flex;align-items:center;padding:10px 14px;gap:10px;border-bottom:1px solid #efefef}
+.mirror-avatar-ring{width:38px;height:38px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:2px;flex-shrink:0}
+.mirror-avatar-inner{width:100%;height:100%;border-radius:50%;background:#e0e0e0;border:2px solid #fff;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#999}
+.mirror-avatar-inner img{width:100%;height:100%;object-fit:cover}
+.mirror-header-text{flex:1;min-width:0}
+.mirror-header-text .display-name{font-size:.82rem;font-weight:700;color:#262626;display:flex;align-items:center;gap:4px}
+.mirror-header-text .display-name .verified{width:14px;height:14px;display:none}
+.mirror-header-text .location-text{font-size:.68rem;color:#666;margin-top:-1px}
+.mirror-header-menu{font-size:1.2rem;color:#262626;letter-spacing:2px;cursor:default}
+
+/* Mirror Surface */
+.mirror-surface-main{height:340px;background:linear-gradient(160deg,#e8e0d0 0%,#f5f0e8 20%,#fff 40%,#f0ece4 60%,#e0d8c8 80%,#d8d0c0 100%);position:relative;overflow:hidden}
+.mirror-surface-main::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 20%,rgba(255,255,255,.5) 45%,rgba(255,255,255,.7) 50%,rgba(255,255,255,.5) 55%,transparent 80%);animation:mirrorShine 6s ease-in-out infinite;pointer-events:none}
+@keyframes mirrorShine{0%,100%{opacity:.3;transform:translateX(-30%) rotate(-5deg)}50%{opacity:.8;transform:translateX(30%) rotate(5deg)}}
+.mirror-surface-main::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(255,255,255,.4),transparent 60%);pointer-events:none}
+.mirror-qr{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:60px;height:60px;background:rgba(255,255,255,.85);border-radius:8px;display:none;align-items:center;justify-content:center;padding:6px}
+.mirror-qr svg{width:100%;height:100%}
+
+/* IG Actions */
+.mirror-ig-actions{padding:10px 14px 4px;display:flex;align-items:center;gap:14px}
+.mirror-ig-actions .ig-icon{font-size:1.3rem;cursor:default;transition:transform .2s}
+.mirror-ig-actions .ig-icon:hover{transform:scale(1.2)}
+.mirror-ig-actions .save-icon{margin-right:auto}
+.mirror-ig-stats{padding:2px 14px;font-size:.78rem;font-weight:700;color:#262626}
+.mirror-ig-caption{padding:4px 14px 8px;font-size:.75rem;color:#262626;line-height:1.5}
+.mirror-ig-caption b{font-weight:700}
+
+/* IG Bottom Nav */
+.mirror-ig-nav{display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #efefef;font-size:1.1rem;color:#262626}
+.mirror-ig-nav span{cursor:default;opacity:.6;transition:opacity .2s}
+.mirror-ig-nav span:first-child{opacity:1}
+
+.mirror-home-indicator{width:70px;height:4px;background:#333;border-radius:2px;margin:8px auto 4px}
+
+/* ========== MATERIALS ========== */
+.materials{background:var(--white)}
+.materials-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.material-card{padding:32px 20px;text-align:center;border-radius:16px;background:var(--off-white);transition:all .3s}
+.material-card:hover{transform:translateY(-5px);box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.material-icon{font-size:2.5rem;margin-bottom:16px}
+.material-card h4{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.material-card p{font-size:.85rem;color:#666}
+
+/* ========== WHO IS IT FOR ========== */
+.target{background:var(--off-white)}
+.target-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.target-card{text-align:center;padding:32px 16px;background:var(--white);border-radius:16px;transition:all .3s;cursor:default;border:2px solid transparent}
+.target-card:hover{border-color:var(--gold);transform:translateY(-5px);box-shadow:0 8px 30px rgba(200,168,75,.12)}
+.target-icon{font-size:2.5rem;margin-bottom:12px}
+.target-card h4{font-size:1rem;font-weight:700;color:var(--navy)}
+
+/* ========== SOCIAL PROOF ========== */
+.proof{background:var(--navy);color:var(--white);text-align:center}
+.proof-card{max-width:700px;margin:0 auto;padding:48px;background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.2);border-radius:24px}
+.proof-card .quote-mark{font-size:4rem;color:var(--gold);line-height:1;font-family:'Playfair Display',serif}
+.proof-card p{font-size:1.2rem;color:rgba(255,255,255,.85);line-height:1.8;margin:16px 0 24px}
+.proof-card .author{color:var(--gold);font-weight:700}
+.proof-bottom{margin-top:48px}
+.proof-bottom p{font-size:1.4rem;font-weight:700;margin-bottom:24px}
+
+/* ========== LEAD FORM ========== */
+.lead-section{background:var(--off-white)}
+.form-card{max-width:600px;margin:0 auto;background:var(--white);padding:48px;border-radius:24px;box-shadow:0 8px 40px rgba(0,0,0,.06)}
+.form-card .field-group{margin-bottom:20px}
+.form-card .field-group label{font-size:.9rem;font-weight:600;color:var(--navy);margin-bottom:8px;display:block}
+.form-card input,.form-card select{width:100%;padding:14px 18px;border:2px solid #e8e4dc;border-radius:12px;font-family:'Heebo',sans-serif;font-size:1rem;transition:border-color .3s}
+.form-card input:focus,.form-card select:focus{outline:none;border-color:var(--gold)}
+.form-submit{width:100%;padding:18px;font-size:1.15rem}
+.thank-you{display:none;text-align:center;padding:40px 0}
+.thank-you h3{font-size:1.8rem;color:var(--navy);margin-bottom:12px}
+.thank-you p{color:#666;margin-bottom:24px}
+
+/* ========== FOOTER ========== */
+.footer{background:var(--navy-dark);color:rgba(255,255,255,.6);text-align:center;padding:32px 0;font-size:.85rem}
+.footer a{color:var(--gold);text-decoration:none}
+.footer .social-links{margin-bottom:12px}
+.footer .social-links a{font-size:1.2rem;margin:0 8px;transition:color .3s}
+.footer .social-links a:hover{color:var(--gold-light)}
+
+/* ========== FAQ ========== */
+.faq{background:var(--white)}
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{margin-bottom:16px;border-radius:16px;overflow:hidden;background:var(--off-white);border:2px solid transparent;transition:all .3s}
+.faq-item:hover{border-color:rgba(200,168,75,.25)}
+.faq-item.open{border-color:var(--gold);box-shadow:0 8px 30px rgba(200,168,75,.08)}
+.faq-question{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;cursor:pointer;gap:16px;-webkit-user-select:none;user-select:none}
+.faq-question h4{font-size:1.05rem;font-weight:700;color:var(--navy);margin:0;line-height:1.5}
+.faq-icon{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1),padding .3s}
+.faq-answer-inner{padding:0 28px 20px;color:#555;font-size:.95rem;line-height:1.8}
+
+/* ========== WHATSAPP FLOAT ========== */
+.whatsapp-float{position:fixed;bottom:24px;left:24px;width:60px;height:60px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);z-index:999;transition:all .3s;cursor:pointer;text-decoration:none}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(37,211,102,.5)}
+.whatsapp-float svg{width:32px;height:32px;fill:white}
+
+/* ========== SCROLL PROGRESS BAR ========== */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));z-index:1002;width:0%;transition:width .1s linear}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero p{margin:0 auto 36px}
+  .hero-cta-row{justify-content:center}
+  .hero-mirror-wrap{margin-top:40px}
+  .editor-layout{grid-template-columns:1fr}
+  .editor-sidebar{position:static;max-height:none}
+  .mirror-preview-area{margin-top:40px}
+  .materials-grid{grid-template-columns:repeat(2,1fr)}
+  .target-grid{grid-template-columns:repeat(3,1fr)}
+  .benefits-grid{grid-template-columns:repeat(2,1fr)}
+  .benefit-highlight{grid-template-columns:1fr}
+  .benefit-highlight-card img{width:140px;height:140px}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+}
+@media(max-width:768px){
+  .flow-step{flex-direction:column!important;text-align:center;gap:16px}
+  .flow-img{padding:0 16px}
+  .flow-img img{max-width:280px;margin:0 auto}
+  .flow-step:nth-child(odd) .flow-img,.flow-step:nth-child(even) .flow-img{justify-content:center}
+  .flow-content{padding:0 16px}
+  .flow-card::before,.flow-card::after{display:none!important}
+  .flowchart::before{right:36px;transform:none}
+  .flow-node{margin:0 auto}
+  .math-equation{flex-direction:column}
+  .materials-grid{grid-template-columns:1fr 1fr}
+  .target-grid{grid-template-columns:1fr 1fr}
+  .benefits-grid{grid-template-columns:1fr}
+  .benefit-highlight-card{flex-direction:column;text-align:center}
+  .benefit-highlight-card img{width:100%;height:180px}
+  .section-padding{padding:60px 0}
+  .hero{padding-top:70px;min-height:auto;padding-bottom:60px}
+  .hero-phone{width:220px;height:400px}
+  .mirror-phone{width:300px}
+  .mirror-surface-main{height:280px}
+  /* Disable 3D tilt on touch devices */
+  .tilt-card:hover{transform:translateY(-6px)!important}
+  /* Hero CTA buttons stack on mobile */
+  .hero-cta-row{flex-direction:column;align-items:center;gap:12px}
+  .hero-cta-row .btn{width:100%;max-width:320px;text-align:center;padding:14px 24px;font-size:1rem}
+  /* FAQ mobile */
+  .faq-question{padding:16px 20px}
+  .faq-question h4{font-size:.95rem}
+  .faq-answer-inner{padding:0 20px 16px}
+  /* Navbar mobile */
+  .navbar{padding:12px 0}
+  .navbar.scrolled{padding:8px 0}
+  .nav-logo{font-size:1rem}
+  .nav-logo-icon{width:32px;height:32px;font-size:.85rem}
+  /* Math section mobile */
+  .math-num{padding:14px 20px;min-width:100px}
+  .math-result{padding:16px 24px}
+  /* Section titles */
+  .section-title{font-size:clamp(1.6rem,5vw,2.5rem)}
+  .section-subtitle{font-size:1rem;margin-bottom:32px}
+}
+@media(max-width:480px){
+  .target-grid{grid-template-columns:1fr}
+  .materials-grid{grid-template-columns:1fr}
+  .form-card{padding:28px 20px}
+  .mirror-phone{width:260px}
+  .mirror-surface-main{height:240px}
+  .flow-img img{max-width:240px}
+  .hero h1{font-size:clamp(1.8rem,7vw,2.4rem)}
+  .hero p{font-size:1rem}
+  .hero-phone{width:190px;height:350px}
+  .hero-mirror-wrap{margin-top:28px}
+  .editor-sidebar{padding:20px 16px}
+  .proof-card{padding:28px 20px}
+  .proof-card p{font-size:1rem}
+  .benefit-body{padding:18px 20px}
+  .whatsapp-float{width:52px;height:52px;bottom:16px;left:16px}
+  .whatsapp-float svg{width:26px;height:26px}
+}
+/* Disable 3D mouse effects on touch devices */
+@media(hover:none){
+  .tilt-card:hover{transform:translateY(-6px)!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== SCROLL PROGRESS ========== -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#hero" class="nav-logo">
+      <div class="nav-logo-icon">🪞</div>
+      Mirror Frame Studio
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">איך זה עובד</a></li>
+      <li><a href="#benefits">יתרונות</a></li>
+      <li><a href="#editor">עורך מראה</a></li>
+      <li><a href="#materials">חומרים</a></li>
+      <li><a href="#faq">שאלות נפוצות</a></li>
+      <li><a href="#contact" class="nav-cta">צרו קשר</a></li>
+    </ul>
+    <div class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <a href="#how" onclick="closeMobileMenu()">איך זה עובד</a>
+  <a href="#benefits" onclick="closeMobileMenu()">יתרונות</a>
+  <a href="#editor" onclick="closeMobileMenu()">עורך מראה</a>
+  <a href="#materials" onclick="closeMobileMenu()">חומרים</a>
+  <a href="#faq" onclick="closeMobileMenu()">שאלות נפוצות</a>
+  <a href="#contact" onclick="closeMobileMenu()" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;border-radius:50px">צרו קשר</a>
+</div>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <span class="hero-badge">MIRROR FRAME STUDIO</span>
+        <h1>
+          המראה שמשווקת
+          <span class="gold-line">את העסק שלך</span>
+        </h1>
+        <p>מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך. בחינם.</p>
+        <div class="hero-cta-row">
+          <a href="#editor" class="btn btn-gold">נסו בחינם — הלבישו את המראה שלכם</a>
+          <a href="#contact" class="btn btn-outline">צרו קשר</a>
+        </div>
+      </div>
+      <div class="hero-mirror-wrap">
+        <div class="hero-phone">
+          <div class="notch"></div>
+          <div class="hero-phone-inner">
+            <div class="ig-header">
+              <div class="avatar-ring"><div class="avatar-inner"></div></div>
+              <div><strong>your_business</strong><br><span style="font-weight:400;font-size:.6rem;color:#999">תל אביב, ישראל</span></div>
+            </div>
+            <div class="mirror-surface" style="height:52%"></div>
+            <div class="ig-actions">
+              <span>♡</span> <span>💬</span> <span>↗</span>
+            </div>
+            <div class="ig-stats" style="font-size:.6rem">1,234 likes</div>
+            <div class="ig-caption"><b>your_business</b> ✨ Come visit us!</div>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS — FLOWCHART ========== -->
+<section class="how-it-works section-padding" id="how">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">איך זה <span class="gold-text">עובד?</span></h2>
+      <p class="section-subtitle reveal">מהמראה על הקיר — עד לפיד של אלפי אנשים. ב-4 צעדים פשוטים.</p>
+    </div>
+    <div class="flowchart">
+      <!-- Step 1 -->
+      <div class="flow-step reveal">
+        <div class="flow-img">
+          <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=600&h=450&fit=crop" alt="מראה ממותגת תלויה על קיר בעסק" loading="lazy">
+        </div>
+        <div class="flow-node">1</div>
+        <div class="flow-content">
+          <div class="flow-card">
+            <h3>🪞 המראה תלויה על הקיר</h3>
+            <p>מראה אקריליק ממותגת בעיצוב אינסטגרם — עם השם, הלוגו והמיתוג של העסק. היא מושכת עיניים ומזמינה צילום באופן טבעי.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow reveal"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" style="stroke:var(--gold)"/></svg></div>
+
+      <!-- Step 2 -->
+      <div class="flow-step reveal">
+        <div class="flow-img">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=450&fit=crop" alt="לקוחה מצלמת סלפי" loading="lazy">
+        </div>
+        <div class="flow-node">2</div>
+        <div class="flow-content">
+          <div class="flow-card">
+            <h3>📸 הלקוח מצלם סלפי</h3>
+            <p>הלקוח רואה את המראה בעיצוב אינסטגרם ומיד שולף את הטלפון. הוא לא יכול לעמוד בפיתוי — הצילום הזה נראה יותר מדי טוב.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow reveal"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" style="stroke:var(--gold)"/></svg></div>
+
+      <!-- Step 3 -->
+      <div class="flow-step reveal">
+        <div class="flow-img">
+          <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=450&fit=crop" alt="העלאה לאינסטגרם" loading="lazy">
+        </div>
+        <div class="flow-node">3</div>
+        <div class="flow-content">
+          <div class="flow-card">
+            <h3>📱 מעלה לאינסטגרם ומתייג</h3>
+            <p>הלקוח משתף את התמונה באינסטגרם — שם העסק מופיע בתמונה עצמה, כי הוא חלק מהמראה. תיוג אוטומטי בלי שתבקשו.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow reveal"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" style="stroke:var(--gold)"/></svg></div>
+
+      <!-- Step 4 -->
+      <div class="flow-step reveal">
+        <div class="flow-img">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=450&fit=crop" alt="חשיפה אורגנית וצמיחה" loading="lazy">
+        </div>
+        <div class="flow-node">4</div>
+        <div class="flow-content">
+          <div class="flow-card">
+            <h3>🚀 העסק מקבל חשיפה — בחינם</h3>
+            <p>כל פוסט = מאות עד אלפי חשיפות אורגניות. מכפיל שיווק שעובד 24/7 בלי שתשלמו שקל על פרסום. כל שבוע מחדש.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BENEFITS — WHY YOU NEED THIS ========== -->
+<section class="benefits section-padding" id="benefits">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">למה כל עסק <span class="gold-text">חייב מראה כזו?</span></h2>
+      <p class="section-subtitle reveal">זו לא סתם מראה — זה כלי שיווקי שעובד בשבילך 24/7</p>
+    </div>
+    <div class="benefits-grid">
+      <!-- Benefit 1 -->
+      <div class="benefit-card tilt-card reveal-flip reveal-delay-1">
+        <img class="benefit-img" src="https://images.unsplash.com/photo-1563986768609-322da13575f2?w=500&h=300&fit=crop" alt="שיווק אורגני חינמי" loading="lazy">
+        <div class="benefit-body">
+          <div class="benefit-icon-badge">📣</div>
+          <h4>שיווק אורגני — בחינם לגמרי</h4>
+          <p>כל סלפי של לקוח הוא פוסט שמפרסם את העסק שלכם. בלי תקציב פרסום, בלי ניהול קמפיינים, בלי לשלם לאף אחד.</p>
+        </div>
+      </div>
+      <!-- Benefit 2 -->
+      <div class="benefit-card tilt-card reveal-flip reveal-delay-2">
+        <img class="benefit-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="חוויית לקוח" loading="lazy">
+        <div class="benefit-body">
+          <div class="benefit-icon-badge">✨</div>
+          <h4>חוויית לקוח בלתי נשכחת</h4>
+          <p>המראה יוצרת רגע של "וואו" שגורם ללקוחות לזכור את העסק. חוויה ייחודית שמבדילה אתכם מהמתחרים.</p>
+        </div>
+      </div>
+      <!-- Benefit 3 -->
+      <div class="benefit-card tilt-card reveal-flip reveal-delay-3">
+        <img class="benefit-img" src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?w=500&h=300&fit=crop" alt="מיתוג פרימיום" loading="lazy">
+        <div class="benefit-body">
+          <div class="benefit-icon-badge">👑</div>
+          <h4>מיתוג פרימיום שמרגיש יקר</h4>
+          <p>מראה באיכות גבוהה עם הלוגו שלכם מעלה את התדמית של העסק. לקוחות מרגישים שהם במקום יוקרתי ומקצועי.</p>
+        </div>
+      </div>
+      <!-- Benefit 4 -->
+      <div class="benefit-card tilt-card reveal-flip reveal-delay-1">
+        <img class="benefit-img" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&h=300&fit=crop" alt="תוצאות מדידות" loading="lazy">
+        <div class="benefit-body">
+          <div class="benefit-icon-badge">📊</div>
+          <h4>תוצאות מדידות ומיידיות</h4>
+          <p>אתם יכולים לספור כמה לקוחות צילמו ושיתפו. ניתן למדוד ROI ברור — כל פוסט שווה עשרות שקלים בפרסום ממומן.</p>
+        </div>
+      </div>
+      <!-- Benefit 5 -->
+      <div class="benefit-card tilt-card reveal-flip reveal-delay-2">
+        <img class="benefit-img" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&h=300&fit=crop" alt="השקעה חד פעמית" loading="lazy">
+        <div class="benefit-body">
+          <div class="benefit-icon-badge">💰</div>
+          <h4>השקעה חד-פעמית, תוצאות לשנים</h4>
+          <p>שלא כמו פרסום ממומן שעולה כל חודש — המראה עובדת בשבילכם 5-7 שנים. עלות לחשיפה שואפת לאפס.</p>
+        </div>
+      </div>
+      <!-- Benefit 6 -->
+      <div class="benefit-card tilt-card reveal-flip reveal-delay-3">
+        <img class="benefit-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&h=300&fit=crop" alt="קהילה ונאמנות" loading="lazy">
+        <div class="benefit-body">
+          <div class="benefit-icon-badge">❤️</div>
+          <h4>בניית קהילה ונאמנות</h4>
+          <p>לקוחות שמשתפים תוכן מהעסק שלכם הופכים לשגרירי מותג. הם מרגישים חלק מהסיפור ומחזירים חברים.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Highlight row -->
+    <div class="benefit-highlight">
+      <div class="benefit-highlight-card reveal">
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=300&h=300&fit=crop" alt="חדר כושר עם מראה" loading="lazy">
+        <div class="benefit-highlight-text">
+          <h4>🏋️ חדר כושר עם 70 מתאמנים?</h4>
+          <p>אם 20% מהם מצלמים סלפי ומעלים — זה 14 פוסטים בשבוע. 56 בחודש. כל אחד חושף את העסק שלכם למאות עוקבים. בלי שתשלמו שקל.</p>
+        </div>
+      </div>
+      <div class="benefit-highlight-card reveal">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=300&h=300&fit=crop" alt="סלון יופי" loading="lazy">
+        <div class="benefit-highlight-text">
+          <h4>💇‍♀️ סלון יופי או סטודיו?</h4>
+          <p>לקוחות שמגיעות אחרי טיפול רוצות לצלם את המראה החדשה שלהן. המראה הממותגת הופכת את הרגע הזה לפרסומת — עם השם שלכם בתמונה.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== THE MATH ========== -->
+<section class="math-section section-padding" id="math">
+  <div class="container">
+    <h2 class="section-title reveal" style="color:var(--white)">בוא נעשה <span class="gold-text">חשבון</span></h2>
+    <p class="section-subtitle reveal" style="color:rgba(255,255,255,.6)">הנה מה שקורה כשמראה ממותגת עובדת בשבילך</p>
+    <div class="math-equation reveal-zoom" id="math-equation">
+      <div class="math-num">
+        <span class="big counter-num" data-target="70">0</span>
+        <span class="label">מתאמנים / לקוחות</span>
+      </div>
+      <span class="math-op">×</span>
+      <div class="math-num">
+        <span class="big counter-num" data-target="20" data-suffix="%">0%</span>
+        <span class="label">מצלמים ומשתפים</span>
+      </div>
+      <span class="math-op">=</span>
+      <div class="math-result">
+        <span class="big counter-num" data-target="14">0</span>
+        <span class="label">פוסטים בשבוע</span>
+      </div>
+    </div>
+    <p class="math-bottom reveal">= אלפי חשיפות אורגניות. בחינם. כל שבוע. 🔥</p>
+  </div>
+</section>
+
+<!-- ========== INTERACTIVE MIRROR EDITOR ========== -->
+<section class="editor-section section-padding" id="editor">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">הלבישו את <span class="gold-text">המראה שלכם</span></h2>
+      <p class="section-subtitle reveal">התאימו את המראה לעסק שלכם — שנו שם, לוגו, סטטיסטיקות ועוד</p>
+    </div>
+    <div class="editor-layout reveal">
+      <!-- Sidebar -->
+      <div class="editor-sidebar">
+        <h3>⚙️ התאמה אישית</h3>
+
+        <div class="field-group">
+          <label>שם תצוגה</label>
+          <input type="text" id="ed-displayname" value="Mirror Frame Studio" oninput="updateMirror()">
+        </div>
+        <div class="field-group">
+          <label>שם משתמש (@)</label>
+          <input type="text" id="ed-username" value="mirror_frame_studio" oninput="updateMirror()">
+        </div>
+        <div class="field-group">
+          <label>מיקום / כיתוב משנה</label>
+          <input type="text" id="ed-location" value="תל אביב, ישראל" oninput="updateMirror()">
+        </div>
+        <div class="field-group">
+          <label>תמונת פרופיל</label>
+          <div class="photo-upload">
+            <input type="file" accept="image/*" id="ed-photo" onchange="handlePhoto(event)">
+            <div class="upload-icon">📷</div>
+            <p>לחצו להעלאת תמונה</p>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <label>תג מאומת ✓</label>
+          <label class="toggle">
+            <input type="checkbox" id="ed-verified" onchange="updateMirror()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <hr style="border:none;border-top:1px solid #eee;margin:16px 0">
+        <div class="field-row">
+          <div class="field-group">
+            <label>❤️ לייקים</label>
+            <input type="text" id="ed-likes" value="1,234" oninput="updateMirror()">
+          </div>
+          <div class="field-group">
+            <label>💬 תגובות</label>
+            <input type="text" id="ed-comments" value="56" oninput="updateMirror()">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label>↗️ שיתופים</label>
+            <input type="text" id="ed-shares" value="23" oninput="updateMirror()">
+          </div>
+          <div class="field-group">
+            <label>🔖 שמירות</label>
+            <input type="text" id="ed-saves" value="89" oninput="updateMirror()">
+          </div>
+        </div>
+        <div class="field-group">
+          <label>כיתוב (Caption)</label>
+          <textarea id="ed-caption" oninput="updateMirror()">✨ בואו לבקר אותנו!</textarea>
+        </div>
+        <hr style="border:none;border-top:1px solid #eee;margin:16px 0">
+        <div class="toggle-row">
+          <label>💡 LED Halo</label>
+          <label class="toggle">
+            <input type="checkbox" id="ed-led" onchange="updateMirror()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="led-options" style="display:none">
+          <div class="led-colors">
+            <div>
+              <div class="led-color-btn active" data-color="warm" onclick="setLed('warm')"></div>
+              <div class="led-label">חם</div>
+            </div>
+            <div>
+              <div class="led-color-btn" data-color="neutral" onclick="setLed('neutral')"></div>
+              <div class="led-label">ניטרלי</div>
+            </div>
+            <div>
+              <div class="led-color-btn" data-color="cool" onclick="setLed('cool')"></div>
+              <div class="led-label">קר</div>
+            </div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <label>QR Code</label>
+          <label class="toggle">
+            <input type="checkbox" id="ed-qr" onchange="updateMirror()">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="editor-cta">
+          <a href="#contact" class="btn btn-gold" style="width:100%;display:block;text-align:center">אהבתם? צרו קשר להזמנה</a>
+        </div>
+      </div>
+
+      <!-- Mirror Preview -->
+      <div class="mirror-preview-area">
+        <div class="mirror-phone" id="mirror-phone">
+          <div class="mirror-phone-screen">
+            <div class="mirror-notch"></div>
+            <div class="mirror-status-bar">
+              <span>9:41</span>
+              <span>●●● WiFi 🔋</span>
+            </div>
+            <!-- IG Header -->
+            <div class="mirror-ig-header">
+              <div class="mirror-avatar-ring">
+                <div class="mirror-avatar-inner" id="mirror-avatar">
+                  <span id="avatar-placeholder">📷</span>
+                  <img id="avatar-img" src="" alt="" style="display:none">
+                </div>
+              </div>
+              <div class="mirror-header-text">
+                <div class="display-name">
+                  <span id="mirror-displayname">Mirror Frame Studio</span>
+                  <svg id="mirror-verified" class="verified" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg>
+                </div>
+                <div class="location-text" id="mirror-location">תל אביב, ישראל</div>
+              </div>
+              <div class="mirror-header-menu">•••</div>
+            </div>
+            <!-- Mirror Surface -->
+            <div class="mirror-surface-main">
+              <div class="mirror-qr" id="mirror-qr">
+                <svg viewBox="0 0 100 100" fill="#333">
+                  <rect x="5" y="5" width="25" height="25" rx="3"/>
+                  <rect x="70" y="5" width="25" height="25" rx="3"/>
+                  <rect x="5" y="70" width="25" height="25" rx="3"/>
+                  <rect x="10" y="10" width="15" height="15" rx="2" fill="white"/>
+                  <rect x="75" y="10" width="15" height="15" rx="2" fill="white"/>
+                  <rect x="10" y="75" width="15" height="15" rx="2" fill="white"/>
+                  <rect x="13" y="13" width="9" height="9" rx="1" fill="#333"/>
+                  <rect x="78" y="13" width="9" height="9" rx="1" fill="#333"/>
+                  <rect x="13" y="78" width="9" height="9" rx="1" fill="#333"/>
+                  <rect x="38" y="5" width="8" height="8" rx="1"/>
+                  <rect x="50" y="5" width="8" height="8" rx="1"/>
+                  <rect x="38" y="17" width="8" height="8" rx="1"/>
+                  <rect x="55" y="17" width="8" height="8" rx="1"/>
+                  <rect x="38" y="38" width="8" height="8" rx="1"/>
+                  <rect x="50" y="38" width="8" height="8" rx="1"/>
+                  <rect x="62" y="38" width="8" height="8" rx="1"/>
+                  <rect x="38" y="50" width="8" height="8" rx="1"/>
+                  <rect x="55" y="55" width="8" height="8" rx="1"/>
+                  <rect x="70" y="50" width="8" height="8" rx="1"/>
+                  <rect x="82" y="50" width="8" height="8" rx="1"/>
+                  <rect x="70" y="62" width="8" height="8" rx="1"/>
+                  <rect x="82" y="62" width="8" height="8" rx="1"/>
+                  <rect x="38" y="70" width="8" height="8" rx="1"/>
+                  <rect x="50" y="70" width="8" height="8" rx="1"/>
+                  <rect x="70" y="78" width="25" height="17" rx="3"/>
+                  <rect x="75" y="83" width="15" height="7" rx="2" fill="white"/>
+                  <rect x="78" y="85" width="9" height="3" rx="1" fill="#333"/>
+                </svg>
+              </div>
+            </div>
+            <!-- IG Actions -->
+            <div class="mirror-ig-actions">
+              <span class="ig-icon">♡</span>
+              <span class="ig-icon">💬</span>
+              <span class="ig-icon">↗️</span>
+              <span class="ig-icon save-icon">🔖</span>
+            </div>
+            <div class="mirror-ig-stats">
+              <span id="mirror-likes">1,234</span> likes · <span id="mirror-comments">56</span> comments · <span id="mirror-shares">23</span> shares · <span id="mirror-saves">89</span> saves
+            </div>
+            <div class="mirror-ig-caption">
+              <b id="mirror-username">mirror_frame_studio</b> <span id="mirror-caption">✨ בואו לבקר אותנו!</span>
+            </div>
+            <!-- IG Nav -->
+            <div class="mirror-ig-nav">
+              <span>🏠</span>
+              <span>🔍</span>
+              <span>➕</span>
+              <span>🎬</span>
+              <span>👤</span>
+            </div>
+            <div class="mirror-home-indicator"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MATERIALS ========== -->
+<section class="materials section-padding" id="materials">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">חומרים ואיכות <span class="gold-text">ללא פשרות</span></h2>
+      <p class="section-subtitle reveal">כל מראה מיוצרת בקפידה מחומרים פרימיום לעמידות מקסימלית</p>
+    </div>
+    <div class="materials-grid">
+      <div class="material-card tilt-card reveal-3d reveal-delay-1">
+        <div class="material-icon">🪟</div>
+        <h4>אקריליק 6mm</h4>
+        <p>לוח אקריליק איכותי בעובי 6 מ"מ — קל, עמיד ובטוח</p>
+      </div>
+      <div class="material-card tilt-card reveal-3d reveal-delay-2">
+        <div class="material-icon">🖨️</div>
+        <h4>הדפסת UV</h4>
+        <p>הדפסה ישירה על האקריליק בטכנולוגיית UV — צבעים חיים ועמידים</p>
+      </div>
+      <div class="material-card tilt-card reveal-3d-left reveal-delay-3">
+        <div class="material-icon">✨</div>
+        <h4>ציפוי מראה</h4>
+        <p>ציפוי מראה מקצועי שמשקף בבהירות מושלמת</p>
+      </div>
+      <div class="material-card tilt-card reveal-3d-left">
+        <div class="material-icon">⏳</div>
+        <h4>עמידות 5-7 שנים</h4>
+        <p>קצוות מלוטשות, עמידות בשמש ובלחות — נבנתה להחזיק</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHO IS IT FOR ========== -->
+<section class="target section-padding" id="target">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">למי זה <span class="gold-text">מתאים?</span></h2>
+      <p class="section-subtitle reveal">כל עסק שרוצה שהלקוחות שלו ישווקו אותו — בחינם</p>
+    </div>
+    <div class="target-grid">
+      <div class="target-card reveal reveal-delay-1">
+        <div class="target-icon">💇‍♀️</div>
+        <h4>סלון יופי</h4>
+      </div>
+      <div class="target-card reveal reveal-delay-1">
+        <div class="target-icon">🧘‍♀️</div>
+        <h4>סטודיו פילאטיס</h4>
+      </div>
+      <div class="target-card reveal reveal-delay-2">
+        <div class="target-icon">☕</div>
+        <h4>בית קפה</h4>
+      </div>
+      <div class="target-card reveal reveal-delay-2">
+        <div class="target-icon">👗</div>
+        <h4>בוטיק אופנה</h4>
+      </div>
+      <div class="target-card reveal reveal-delay-3">
+        <div class="target-icon">💪</div>
+        <h4>חדר כושר</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SOCIAL PROOF ========== -->
+<section class="proof section-padding" id="proof">
+  <div class="container">
+    <h2 class="section-title reveal" style="color:var(--white)">מה הלקוחות <span class="gold-text">אומרים</span></h2>
+    <div class="proof-card reveal-zoom">
+      <div class="quote-mark">"</div>
+      <p>הלקוח הראשון שלנו — סטודיו פילאטיס עם 70 מתאמנים. תוך שבוע המראה הניבה 14 פוסטים אורגניים של לקוחות שתייגו את הסטודיו. חשיפה שאי אפשר לקנות.</p>
+      <div class="author">— סטודיו פילאטיס, תל אביב</div>
+    </div>
+    <div class="proof-bottom reveal">
+      <p>אתה הבא? 🚀</p>
+      <a href="#contact" class="btn btn-gold">בואו נדבר</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq section-padding" id="faq">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal-flip">שאלות <span class="gold-text">נפוצות</span></h2>
+      <p class="section-subtitle reveal">כל מה שרציתם לדעת על המראות הממותגות</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>מה הגודל של המראה?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">המראות שלנו מגיעות במספר גדלים — החל מ-40×60 ס"מ (מתאים לפינת סלפי) ועד 60×90 ס"מ (מתאים לקיר מרכזי בעסק). אפשר גם גדלים מותאמים אישית לפי בקשה.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>מאיזה חומר המראה עשויה?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">המראה עשויה מלוח אקריליק בעובי 6 מ"מ עם ציפוי מראה מקצועי. ההדפסה נעשית בטכנולוגיית UV ישירות על האקריליק — צבעים חיים ועמידים לאורך שנים. קלה ובטוחה יותר מזכוכית.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>כמה זמן לוקח לייצר ולמשלוח?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">תהליך הייצור לוקח 5-7 ימי עסקים מרגע אישור העיצוב. המשלוח ארצי תוך 2-3 ימי עסקים נוספים. סה"כ תוך כ-10 ימים המראה אצלכם בעסק.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>האם אפשר לעצב את המראה לבד?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">בהחלט! השתמשו בעורך המראה שלנו למעלה כדי לראות איך המראה תיראה עם המיתוג שלכם. לאחר ההזמנה, מעצב מקצועי שלנו ישלים את העיצוב הסופי ויתאים אותו בדיוק לצרכים שלכם.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>מה קורה אם המראה ניזוקה?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">אקריליק עמיד פי 17 מזכוכית רגילה, אז הסיכוי לנזק נמוך מאוד. עם זאת, אנחנו מציעים אחריות של שנה על פגמי ייצור. במקרה של נזק חיצוני — ניתן להזמין החלפה במחיר מוזל.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>האם אפשר להוסיף תאורת LED?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">כן! אנחנו מציעים תאורת LED Halo מסביב למראה ב-3 גוונים: חם, ניטרלי וקר. התאורה מחוברת בחיבור USB ויוצרת אפקט פרימיום שמושך עוד יותר צילומים.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <h4>מה המחיר?</h4>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">המחיר משתנה לפי הגודל, העיצוב ותוספות כמו LED ו-QR. צרו איתנו קשר לקבלת הצעת מחיר מותאמת אישית. כל מראה היא השקעה חד-פעמית שמחליפה חודשים של פרסום ממומן.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEAD FORM ========== -->
+<section class="lead-section section-padding" id="contact">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">רוצים מראה <span class="gold-text">לעסק שלכם?</span></h2>
+      <p class="section-subtitle reveal">השאירו פרטים ונחזור אליכם תוך 24 שעות</p>
+    </div>
+    <div class="form-card reveal-flip">
+      <form id="lead-form" onsubmit="handleSubmit(event)">
+        <div class="field-group">
+          <label>שם העסק</label>
+          <input type="text" id="form-business" required placeholder="למשל: סטודיו פילאטיס גלית">
+        </div>
+        <div class="field-group">
+          <label>שם איש קשר</label>
+          <input type="text" id="form-name" required placeholder="השם שלך">
+        </div>
+        <div class="field-group">
+          <label>טלפון</label>
+          <input type="tel" id="form-phone" required placeholder="050-0000000">
+        </div>
+        <div class="field-group">
+          <label>סוג עסק</label>
+          <select id="form-type" required>
+            <option value="">בחרו סוג עסק</option>
+            <option value="salon">סלון יופי</option>
+            <option value="pilates">סטודיו פילאטיס / יוגה</option>
+            <option value="cafe">בית קפה / מסעדה</option>
+            <option value="boutique">בוטיק אופנה</option>
+            <option value="gym">חדר כושר</option>
+            <option value="other">אחר</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-gold form-submit">שלחו פרטים ←</button>
+      </form>
+      <div class="thank-you" id="thank-you">
+        <h3>🎉 תודה!</h3>
+        <p>קיבלנו את הפרטים שלכם ונחזור אליכם בהקדם</p>
+        <a href="https://wa.me/972503755705?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%9E%D7%A8%D7%90%D7%94%20%D7%9E%D7%9E%D7%95%D7%AA%D7%92%D7%AA" target="_blank" class="btn btn-navy">💬 דברו איתנו בוואטסאפ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="social-links">
+      <a href="https://instagram.com/mirror_frame_studio" target="_blank">📸 @mirror_frame_studio</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="tel:0503755705">📞 050-3755705</a>
+    </div>
+    <p>© 2026 Mirror Frame Studio. כל הזכויות שמורות.</p>
+  </div>
+</footer>
+
+<!-- ========== WHATSAPP FLOAT ========== -->
+<a href="https://wa.me/972503755705?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%9E%D7%A8%D7%90%D7%94%20%D7%9E%D7%9E%D7%95%D7%AA%D7%92%D7%AA" target="_blank" class="whatsapp-float" title="שלחו הודעה בוואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ========== PARTICLES ==========
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDelay=Math.random()*8+'s';
+    p.style.animationDuration=(6+Math.random()*6)+'s';
+    p.style.width=p.style.height=(2+Math.random()*4)+'px';
+    c.appendChild(p);
+  }
+})();
+
+// ========== NAVBAR SCROLL ==========
+const navbar=document.getElementById('navbar');
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a:not(.nav-cta)');
+
+window.addEventListener('scroll',()=>{
+  // Navbar background
+  navbar.classList.toggle('scrolled',window.scrollY>80);
+
+  // Scroll progress
+  const scrollTop=window.scrollY;
+  const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+  const scrollPercent=(scrollTop/docHeight)*100;
+  document.getElementById('scroll-progress').style.width=scrollPercent+'%';
+
+  // Active nav link
+  let current='';
+  sections.forEach(s=>{
+    const top=s.offsetTop-120;
+    if(scrollTop>=top)current=s.getAttribute('id');
+  });
+  navLinks.forEach(a=>{
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+},{passive:true});
+
+// ========== MOBILE MENU ==========
+function toggleMobileMenu(){
+  document.getElementById('nav-hamburger').classList.toggle('open');
+  document.getElementById('mobile-overlay').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mobile-overlay').classList.contains('open')?'hidden':'';
+}
+function closeMobileMenu(){
+  document.getElementById('nav-hamburger').classList.remove('open');
+  document.getElementById('mobile-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ========== SCROLL REVEAL (all animation types) ==========
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}});
+},{threshold:0.15});
+document.querySelectorAll('.reveal,.reveal-3d,.reveal-3d-left,.reveal-flip,.reveal-zoom').forEach(el=>observer.observe(el));
+
+// ========== COUNTER ANIMATION ==========
+let counterDone=false;
+const mathObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!counterDone){
+      counterDone=true;
+      document.querySelectorAll('.counter-num').forEach(el=>{
+        const target=parseInt(el.dataset.target);
+        const suffix=el.dataset.suffix||'';
+        const duration=1500;
+        const start=performance.now();
+        function tick(now){
+          const elapsed=now-start;
+          const progress=Math.min(elapsed/duration,1);
+          const eased=1-Math.pow(1-progress,3);
+          const current=Math.round(target*eased);
+          el.textContent=current+suffix;
+          if(progress<1)requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+  });
+},{threshold:0.3});
+const mathEq=document.getElementById('math-equation');
+if(mathEq)mathObserver.observe(mathEq);
+
+// ========== 3D TILT ON MOUSE (desktop) ==========
+document.querySelectorAll('.tilt-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const centerX=rect.width/2;
+    const centerY=rect.height/2;
+    const rotateX=((y-centerY)/centerY)*-6;
+    const rotateY=((x-centerX)/centerX)*6;
+    card.style.transform=`perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='';
+  });
+});
+
+// ========== EDITOR PHONE 3D TILT ==========
+const editorPhone=document.querySelector('.mirror-preview-area');
+const mirrorPhone=document.querySelector('.mirror-phone');
+if(editorPhone&&mirrorPhone){
+  editorPhone.style.perspective='900px';
+  editorPhone.addEventListener('mousemove',e=>{
+    const rect=editorPhone.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5;
+    const y=(e.clientY-rect.top)/rect.height-.5;
+    mirrorPhone.style.transform=`rotateY(${x*15}deg) rotateX(${-y*10}deg)`;
+    mirrorPhone.style.transition='transform .1s ease-out';
+  });
+  editorPhone.addEventListener('mouseleave',()=>{
+    mirrorPhone.style.transform='';
+    mirrorPhone.style.transition='transform .5s ease-out';
+  });
+}
+
+// ========== HERO PHONE 3D TILT ==========
+const heroPhone=document.querySelector('.hero-phone');
+if(heroPhone){
+  const heroWrap=document.querySelector('.hero-mirror-wrap');
+  heroWrap.addEventListener('mousemove',e=>{
+    const rect=heroWrap.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5;
+    const y=(e.clientY-rect.top)/rect.height-.5;
+    heroPhone.style.transform=`rotateY(${x*20}deg) rotateX(${-y*15}deg) translateZ(20px)`;
+    heroPhone.style.transition='transform .1s ease-out';
+  });
+  heroWrap.addEventListener('mouseleave',()=>{
+    heroPhone.style.transform='';
+    heroPhone.style.transition='transform .6s ease-out';
+  });
+  heroWrap.style.perspective='800px';
+}
+
+// ========== FAQ ACCORDION ==========
+function toggleFaq(item){
+  const wasOpen=item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight=null;
+  });
+  // Open clicked (if it wasn't open)
+  if(!wasOpen){
+    item.classList.add('open');
+    const answer=item.querySelector('.faq-answer');
+    answer.style.maxHeight=answer.scrollHeight+'px';
+  }
+}
+
+// ========== MIRROR EDITOR ==========
+let ledColor='warm';
+
+function updateMirror(){
+  const dn=document.getElementById('ed-displayname').value;
+  const un=document.getElementById('ed-username').value;
+  const loc=document.getElementById('ed-location').value;
+  const verified=document.getElementById('ed-verified').checked;
+  const likes=document.getElementById('ed-likes').value;
+  const comments=document.getElementById('ed-comments').value;
+  const shares=document.getElementById('ed-shares').value;
+  const saves=document.getElementById('ed-saves').value;
+  const caption=document.getElementById('ed-caption').value;
+  const ledOn=document.getElementById('ed-led').checked;
+  const qrOn=document.getElementById('ed-qr').checked;
+
+  document.getElementById('mirror-displayname').textContent=dn;
+  document.getElementById('mirror-username').textContent=un;
+  document.getElementById('mirror-location').textContent=loc;
+  document.getElementById('mirror-verified').style.display=verified?'inline':'none';
+  document.getElementById('mirror-likes').textContent=likes;
+  document.getElementById('mirror-comments').textContent=comments;
+  document.getElementById('mirror-shares').textContent=shares;
+  document.getElementById('mirror-saves').textContent=saves;
+  document.getElementById('mirror-caption').textContent=caption;
+
+  // LED
+  const phone=document.getElementById('mirror-phone');
+  document.getElementById('led-options').style.display=ledOn?'block':'none';
+  if(ledOn){
+    const colors={warm:'rgba(255,170,68,.6)',neutral:'rgba(255,240,200,.6)',cool:'rgba(160,196,255,.6)'};
+    const glows={warm:'rgba(255,136,0,.25)',neutral:'rgba(255,224,160,.25)',cool:'rgba(100,160,255,.25)'};
+    phone.style.boxShadow=`0 0 40px 15px ${colors[ledColor]}, 0 0 80px 30px ${glows[ledColor]}, 0 30px 80px rgba(0,0,0,.3)`;
+  }else{
+    phone.style.boxShadow='0 30px 80px rgba(0,0,0,.3)';
+  }
+
+  // QR
+  document.getElementById('mirror-qr').style.display=qrOn?'flex':'none';
+}
+
+function setLed(color){
+  ledColor=color;
+  document.querySelectorAll('.led-color-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.led-color-btn[data-color="${color}"]`).classList.add('active');
+  updateMirror();
+}
+
+function handlePhoto(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const img=document.getElementById('avatar-img');
+    img.src=ev.target.result;
+    img.style.display='block';
+    document.getElementById('avatar-placeholder').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ========== FORM ==========
+function handleSubmit(e){
+  e.preventDefault();
+  const data={
+    business:document.getElementById('form-business').value,
+    name:document.getElementById('form-name').value,
+    phone:document.getElementById('form-phone').value,
+    type:document.getElementById('form-type').value,
+    timestamp:new Date().toISOString()
+  };
+  // Store in localStorage
+  const leads=JSON.parse(localStorage.getItem('mirror_leads')||'[]');
+  leads.push(data);
+  localStorage.setItem('mirror_leads',JSON.stringify(leads));
+
+  // Show thank you
+  document.getElementById('lead-form').style.display='none';
+  document.getElementById('thank-you').style.display='block';
+
+  // WhatsApp redirect after delay
+  setTimeout(()=>{
+    const msg=encodeURIComponent(`היי, אני ${data.name} מ${data.business}. אשמח לשמוע על המראות הממותגות שלכם!`);
+    window.open(`https://wa.me/972503755705?text=${msg}`,'_blank');
+  },1500);
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+
+</body>
+</html>
