@@ -211,30 +211,15 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 
 /* Mirror Preview — iPhone Instagram mockup */
 .mirror-preview-area{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:600px;position:relative}
-/* iPhone shell */
-.iphone-shell{position:relative;width:380px;background:#000;border-radius:44px;padding:12px;transition:all .4s ease;
-  box-shadow:0 30px 80px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.1),inset 0 0 0 1px rgba(255,255,255,.05)}
-.iphone-screen{background:#fff;border-radius:34px;overflow:hidden;position:relative}
-/* Status bar */
-.iphone-statusbar{display:flex;align-items:center;justify-content:space-between;padding:10px 24px 6px;background:#fff;font-size:.7rem;font-weight:600;color:#000}
-.iphone-statusbar-right{display:flex;align-items:center;gap:5px}
-.iphone-statusbar-right svg{width:16px;height:12px}
-/* Dynamic Island */
-.iphone-island{width:90px;height:26px;background:#000;border-radius:20px;margin:0 auto;position:relative;top:-2px}
+/* iPhone shell — no black frame */
+.iphone-shell{position:relative;width:380px;transition:all .4s ease;
+  box-shadow:0 30px 80px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.08)}
+.iphone-screen{background:#fff;border-radius:28px;overflow:hidden;position:relative}
 /* IG Top bar */
 .ig-topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 6px;background:#fff}
 .ig-topbar-logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:#262626;letter-spacing:-.5px}
 .ig-topbar-icons{display:flex;align-items:center;gap:16px}
 .ig-topbar-icons svg{width:22px;height:22px;fill:none;stroke:#262626;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-/* Stories row */
-.ig-stories{display:flex;gap:12px;padding:8px 14px 10px;background:#fff;border-bottom:1px solid #efefef;overflow-x:auto}
-.ig-stories::-webkit-scrollbar{display:none}
-.ig-story{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0}
-.ig-story-ring{width:52px;height:52px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:2.5px}
-.ig-story-ring.no-story{background:#ddd}
-.ig-story-ring-inner{width:100%;height:100%;border-radius:50%;background:#fff;padding:2px}
-.ig-story-ring-inner img,.ig-story-ring-inner span{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;background:#f0f0f0;color:#aaa;object-fit:cover}
-.ig-story-name{font-size:.6rem;color:#262626;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
 /* Post header */
 .ig-post-header{display:flex;align-items:center;padding:10px 14px;gap:10px;background:#fff}
 .ig-post-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:2px;flex-shrink:0;overflow:hidden}
@@ -269,8 +254,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .ig-bottomnav svg{width:22px;height:22px;fill:none;stroke:#262626;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ig-bottomnav svg.filled{fill:#262626;stroke:none}
 .ig-bottomnav-avatar{width:24px;height:24px;border-radius:50%;background:#ddd;border:1.5px solid #262626}
-/* iPhone home indicator */
-.iphone-homebar{width:120px;height:4px;background:#000;border-radius:2px;margin:8px auto 2px}
 /* Size label */
 .mirror-size-label{margin-top:16px;font-size:.85rem;color:#888;font-weight:500;text-align:center}
 /* Size selector in sidebar */
@@ -406,11 +389,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .hero{padding-top:70px;min-height:auto;padding-bottom:60px}
   .hero-mirror-img{max-width:260px;border-radius:16px}
   .hero-mirror-glow{inset:-12px}
-  .iphone-shell{width:100%;max-width:320px;padding:8px;border-radius:36px}
-  .iphone-screen{border-radius:28px}
-  .ig-stories{gap:8px;padding:6px 10px 8px}
-  .ig-story-ring{width:42px;height:42px}
-  .ig-story-name{font-size:.55rem}
+  .iphone-shell{width:100%;max-width:320px}
   .ig-post-header{padding:8px 10px;gap:8px}
   .ig-post-avatar{width:28px;height:28px}
   .ig-post-displayname{font-size:.75rem}
@@ -448,11 +427,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .target-grid{grid-template-columns:1fr}
   .materials-grid{grid-template-columns:1fr}
   .form-card{padding:28px 20px}
-  .iphone-shell{max-width:280px;padding:6px;border-radius:32px}
-  .iphone-screen{border-radius:26px}
-  .ig-story-ring{width:36px;height:36px}
-  .iphone-statusbar{padding:6px 16px 4px;font-size:.6rem}
-  .iphone-island{width:70px;height:20px}
+  .iphone-shell{max-width:280px}
   .flow-img img{max-width:240px}
   .hero h1{font-size:clamp(1.8rem,7vw,2.4rem)}
   .hero p{font-size:1rem}
@@ -853,16 +828,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
       <div class="mirror-preview-area">
         <div class="iphone-shell">
           <div class="iphone-screen">
-            <!-- Status bar -->
-            <div class="iphone-statusbar">
-              <span>9:41</span>
-              <div class="iphone-island"></div>
-              <div class="iphone-statusbar-right">
-                <svg viewBox="0 0 18 12"><path d="M1 4.2h2.4v7.6H1zM5 2.8h2.4v9H5zM9 1h2.4v10.8H9zM13 3.5h2.4v8.3H13z" fill="#000"/></svg>
-                <svg viewBox="0 0 16 12"><path d="M8 2C4.6 2 1.6 3.3.3 5.3l1.3 1.3C2.8 5 5.2 4 8 4s5.2 1 6.4 2.6l1.3-1.3C14.4 3.3 11.4 2 8 2zm0 4c-2 0-3.8.7-5 1.8L4.3 9c.9-.8 2.2-1.2 3.7-1.2s2.8.4 3.7 1.2L13 7.8C11.8 6.7 10 6 8 6zm0 4c-1 0-1.9.3-2.5.9L8 13.5l2.5-2.6C9.9 10.3 9 10 8 10z" fill="#000"/></svg>
-                <svg viewBox="0 0 28 14"><rect x="0" y="1" width="22" height="12" rx="2.5" ry="2.5" fill="none" stroke="#000" stroke-width="1.2"/><rect x="2" y="3" width="17" height="8" rx="1" fill="#000"/><path d="M24 5v4a2 2 0 000-4z" fill="#000"/></svg>
-              </div>
-            </div>
             <!-- IG Top bar -->
             <div class="ig-topbar">
               <span class="ig-topbar-logo">Instagram</span>
@@ -871,29 +836,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
                 <!-- Messenger -->
                 <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-              </div>
-            </div>
-            <!-- Stories row -->
-            <div class="ig-stories">
-              <div class="ig-story">
-                <div class="ig-story-ring"><div class="ig-story-ring-inner"><span>📷</span></div></div>
-                <span class="ig-story-name">הסטורי שלך</span>
-              </div>
-              <div class="ig-story">
-                <div class="ig-story-ring"><div class="ig-story-ring-inner"><span>💇</span></div></div>
-                <span class="ig-story-name">salon_tlv</span>
-              </div>
-              <div class="ig-story">
-                <div class="ig-story-ring"><div class="ig-story-ring-inner"><span>💪</span></div></div>
-                <span class="ig-story-name">fit_studio</span>
-              </div>
-              <div class="ig-story">
-                <div class="ig-story-ring"><div class="ig-story-ring-inner"><span>☕</span></div></div>
-                <span class="ig-story-name">cafe_beam</span>
-              </div>
-              <div class="ig-story">
-                <div class="ig-story-ring"><div class="ig-story-ring-inner"><span>🧘</span></div></div>
-                <span class="ig-story-name">yoga_life</span>
               </div>
             </div>
             <!-- Post header -->
@@ -951,8 +893,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
               <!-- Profile -->
               <div class="ig-bottomnav-avatar"></div>
             </div>
-            <!-- Home indicator -->
-            <div class="iphone-homebar"></div>
           </div>
         </div>
         <div class="mirror-size-label" id="mirror-size-label">S — 40×50 ס״מ</div>
