@@ -232,12 +232,9 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .ig-post-displayname .verified{width:13px;height:13px;display:none}
 .ig-post-location{font-size:.65rem;color:#8e8e8e;margin-top:1px}
 .ig-post-more{font-size:1.1rem;color:#262626;cursor:default;letter-spacing:2px}
-/* Post image container — fixed square like IG, dark bg */
-.ig-post-image{position:relative;width:100%;aspect-ratio:1/1;background:#1a1a1a;display:flex;align-items:center;justify-content:center;overflow:hidden}
-/* The actual mirror inside the post */
-.mirror-surface{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:all .4s ease;
-  background:linear-gradient(165deg,#e8edf4 0%,#d4dce8 15%,#c8d4e4 30%,#bcc8dc 50%,#d0daea 70%,#e0e8f2 85%,#eef2f8 100%);
-  border-radius:4px}
+/* The mirror image area */
+.mirror-surface{position:relative;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:aspect-ratio .4s ease;aspect-ratio:50/60;
+  background:linear-gradient(165deg,#e8edf4 0%,#d4dce8 15%,#c8d4e4 30%,#bcc8dc 50%,#d0daea 70%,#e0e8f2 85%,#eef2f8 100%)}
 .mirror-surface::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35) 0%,transparent 40%,transparent 60%,rgba(255,255,255,.12) 100%);pointer-events:none;z-index:1}
 .mirror-surface::after{content:'';position:absolute;top:-30%;left:-20%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(255,255,255,.3),transparent 70%);pointer-events:none;z-index:1;transform:rotate(-15deg)}
 .mirror-surface-text{font-size:.85rem;color:rgba(100,120,150,.35);font-weight:300;text-align:center;letter-spacing:1px;pointer-events:none;z-index:2;padding:0 10px}
@@ -907,15 +904,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
               </div>
               <span class="ig-post-more">···</span>
             </div>
-            <!-- Post image area (dark bg, like IG) -->
-            <div class="ig-post-image">
-              <!-- THE MIRROR (acrylic, proportional) -->
-              <div class="mirror-surface" id="mirror-surface">
-                <div class="mirror-surface-led" id="mirror-led"></div>
-                <span class="mirror-surface-text">🪞 כאן הלקוחות שלכם מצלמים סלפי</span>
-                <div class="mirror-surface-qr" id="mirror-qr">
-                  <svg viewBox="0 0 100 100" fill="#333"><rect x="5" y="5" width="25" height="25" rx="3"/><rect x="70" y="5" width="25" height="25" rx="3"/><rect x="5" y="70" width="25" height="25" rx="3"/><rect x="13" y="13" width="9" height="9" rx="1"/><rect x="78" y="13" width="9" height="9" rx="1"/><rect x="13" y="78" width="9" height="9" rx="1"/></svg>
-                </div>
+            <!-- THE MIRROR -->
+            <div class="mirror-surface" id="mirror-surface">
+              <div class="mirror-surface-led" id="mirror-led"></div>
+              <span class="mirror-surface-text">🪞 כאן הלקוחות שלכם מצלמים סלפי</span>
+              <div class="mirror-surface-qr" id="mirror-qr">
+                <svg viewBox="0 0 100 100" fill="#333"><rect x="5" y="5" width="25" height="25" rx="3"/><rect x="70" y="5" width="25" height="25" rx="3"/><rect x="5" y="70" width="25" height="25" rx="3"/><rect x="13" y="13" width="9" height="9" rx="1"/><rect x="78" y="13" width="9" height="9" rx="1"/><rect x="13" y="78" width="9" height="9" rx="1"/></svg>
               </div>
             </div>
             <!-- Post actions -->
@@ -1449,22 +1443,9 @@ function updateCustomSize(){
   const w=parseInt(document.getElementById('ed-width').value)||50;
   const h=parseInt(document.getElementById('ed-height').value)||60;
   const surface=document.getElementById('mirror-surface');
-  const container=document.querySelector('.ig-post-image');
-  if(!container)return;
-  const boxW=container.offsetWidth;
-  const boxH=container.offsetHeight;
-  // Scale mirror to fit inside the square container with 8% padding
-  const pad=0.92;
-  const maxW=boxW*pad;
-  const maxH=boxH*pad;
-  const scale=Math.min(maxW/w,maxH/h);
-  surface.style.width=Math.round(w*scale)+'px';
-  surface.style.height=Math.round(h*scale)+'px';
-  surface.style.aspectRatio='';
+  surface.style.aspectRatio=w+' / '+h;
   document.getElementById('mirror-size-label').textContent=w+'×'+h+' ס״מ';
 }
-updateCustomSize();
-window.addEventListener('resize',updateCustomSize);
 
 function updateMirror(){
   const dn=document.getElementById('ed-displayname').value;
