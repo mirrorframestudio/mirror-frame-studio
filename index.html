@@ -211,7 +211,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 
 /* Mirror Preview — Pure CSS acrylic mirror */
 .mirror-preview-area{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:600px;position:relative}
-.mirror-real{position:relative;width:380px;border-radius:18px;overflow:hidden;transition:all .5s ease;
+.mirror-real{position:relative;width:200px;border-radius:18px;overflow:hidden;transition:all .5s ease;aspect-ratio:40/50;
   background:#fff;
   box-shadow:0 25px 80px rgba(0,0,0,.18),0 0 1px rgba(255,255,255,.8),0 0 60px rgba(200,168,75,.08)}
 /* Frame border effect */
@@ -752,21 +752,37 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
         <div class="field-group">
           <label>📐 מידה</label>
           <div class="size-selector">
-            <div class="size-btn" data-size="S" onclick="setSize('S')">
+            <div class="size-btn active" data-size="S" onclick="setSize('S')">
               <span class="size-name">S</span>
-              <span class="size-dim">40×50 ס״מ</span>
+              <span class="size-dim">40×50</span>
             </div>
-            <div class="size-btn active" data-size="M" onclick="setSize('M')">
+            <div class="size-btn" data-size="M" onclick="setSize('M')">
               <span class="size-name">M</span>
-              <span class="size-dim">50×60 ס״מ</span>
+              <span class="size-dim">50×60</span>
             </div>
             <div class="size-btn" data-size="L" onclick="setSize('L')">
               <span class="size-name">L</span>
-              <span class="size-dim">60×75 ס״מ</span>
+              <span class="size-dim">60×75</span>
             </div>
             <div class="size-btn" data-size="XL" onclick="setSize('XL')">
               <span class="size-name">XL</span>
-              <span class="size-dim">80×100 ס״מ</span>
+              <span class="size-dim">80×100</span>
+            </div>
+            <div class="size-btn" data-size="custom" onclick="setSize('custom')">
+              <span class="size-name">מותאם</span>
+              <span class="size-dim">בחירה חופשית</span>
+            </div>
+          </div>
+          <div id="custom-size-fields" style="display:none;margin-top:12px">
+            <div class="field-row">
+              <div class="field-group" style="margin-bottom:0">
+                <label style="font-size:.75rem">רוחב (ס״מ)</label>
+                <input type="number" id="ed-width" value="50" min="20" max="200" oninput="updateCustomSize()">
+              </div>
+              <div class="field-group" style="margin-bottom:0">
+                <label style="font-size:.75rem">גובה (ס״מ)</label>
+                <input type="number" id="ed-height" value="60" min="20" max="200" oninput="updateCustomSize()">
+              </div>
             </div>
           </div>
         </div>
@@ -856,7 +872,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
             </div>
           </div>
         </div>
-        <div class="mirror-size-label" id="mirror-size-label">M — 50×60 ס״מ</div>
+        <div class="mirror-size-label" id="mirror-size-label">S — 40×50 ס״מ</div>
       </div>
     </div>
   </div>
@@ -1308,28 +1324,40 @@ function toggleFaq(item){
 
 // ========== MIRROR EDITOR ==========
 let ledColor='warm';
-let currentSize='M';
+let currentSize='S';
 const mirrorSizes={
-  S:{width:280,label:'S — 40×50 ס״מ'},
-  M:{width:380,label:'M — 50×60 ס״מ'},
-  L:{width:460,label:'L — 60×75 ס״מ'},
-  XL:{width:540,label:'XL — 80×100 ס״מ'}
+  S:{w:40,h:50},
+  M:{w:50,h:60},
+  L:{w:60,h:75},
+  XL:{w:80,h:100}
 };
+function applyMirrorSize(w,h,label){
+  const mirrorEl=document.getElementById('mirror-real');
+  // Scale: 1cm = ~5px on desktop, capped so it fits
+  const scale=window.innerWidth<=768?3.2:5;
+  const maxW=window.innerWidth<=768?window.innerWidth*0.85:540;
+  const pxW=Math.min(w*scale,maxW);
+  const ratio=w/h;
+  mirrorEl.style.width=pxW+'px';
+  mirrorEl.style.maxWidth='100%';
+  mirrorEl.style.aspectRatio=ratio;
+  document.getElementById('mirror-size-label').textContent=label;
+}
 function setSize(size){
   currentSize=size;
-  const mirrorEl=document.getElementById('mirror-real');
-  const info=mirrorSizes[size];
-  // On mobile, use percentage-based max-width instead
-  if(window.innerWidth<=768){
-    const pct={S:55,M:75,L:88,XL:100};
-    mirrorEl.style.width='';
-    mirrorEl.style.maxWidth=pct[size]+'%';
-  }else{
-    mirrorEl.style.width=info.width+'px';
-    mirrorEl.style.maxWidth='100%';
-  }
-  document.getElementById('mirror-size-label').textContent=info.label;
   document.querySelectorAll('.size-btn').forEach(b=>b.classList.toggle('active',b.dataset.size===size));
+  document.getElementById('custom-size-fields').style.display=size==='custom'?'block':'none';
+  if(size==='custom'){
+    updateCustomSize();
+  }else{
+    const s=mirrorSizes[size];
+    applyMirrorSize(s.w,s.h,size+' — '+s.w+'×'+s.h+' ס״מ');
+  }
+}
+function updateCustomSize(){
+  const w=parseInt(document.getElementById('ed-width').value)||50;
+  const h=parseInt(document.getElementById('ed-height').value)||60;
+  applyMirrorSize(w,h,w+'×'+h+' ס״מ (מותאם אישית)');
 }
 
 function updateMirror(){
