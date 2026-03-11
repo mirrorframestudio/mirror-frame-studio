@@ -645,7 +645,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
     <button class="exit-close" onclick="closeExit()">&times;</button>
     <h3>רגע! לפני שעוזבים 🪞</h3>
     <p>השאירו מספר טלפון ונחזור אליכם עם הצעת מחיר מיוחדת — בלי התחייבות</p>
-    <input class="exit-input" type="tel" id="exit-phone" placeholder="050-1234567" dir="ltr">
+    <input class="exit-input" type="tel" id="exit-phone" placeholder="050-1234567" dir="ltr" autocomplete="tel">
     <button class="btn btn-gold" style="width:100%" onclick="sendExit()">שלחו לי הצעה</button>
   </div>
 </div>
@@ -1436,19 +1436,19 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
       <form id="lead-form" onsubmit="handleSubmit(event)">
         <div class="field-group">
           <label>שם העסק</label>
-          <input type="text" id="form-business" required placeholder="למשל: סטודיו פילאטיס גלית">
+          <input type="text" id="form-business" required placeholder="למשל: סטודיו פילאטיס גלית" autocomplete="organization">
         </div>
         <div class="field-group">
           <label>שם איש קשר</label>
-          <input type="text" id="form-name" required placeholder="השם שלך">
+          <input type="text" id="form-name" required placeholder="השם שלך" autocomplete="name">
         </div>
         <div class="field-group">
           <label>טלפון</label>
-          <input type="tel" id="form-phone" required placeholder="050-0000000">
+          <input type="tel" id="form-phone" required placeholder="050-0000000" autocomplete="tel">
         </div>
         <div class="field-group">
           <label>אימייל</label>
-          <input type="email" id="form-email" placeholder="your@email.com" dir="ltr">
+          <input type="email" id="form-email" placeholder="your@email.com" dir="ltr" autocomplete="email">
         </div>
         <div class="field-group">
           <label>סוג עסק</label>
