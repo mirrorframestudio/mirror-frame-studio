@@ -374,6 +374,32 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 /* ========== SCROLL PROGRESS BAR ========== */
 .scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));z-index:1002;width:0%;transition:width .1s linear}
 
+/* ========== OFFER BANNER ========== */
+.offer-banner{position:fixed;top:-60px;left:0;right:0;z-index:1003;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--navy);text-align:center;padding:12px 24px;font-size:.9rem;font-weight:700;transition:top .5s ease;display:flex;align-items:center;justify-content:center;gap:16px}
+.offer-banner.visible{top:0}
+.offer-banner .offer-timer{background:var(--navy);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:.85rem;font-weight:800;letter-spacing:1px}
+.offer-banner .offer-close{position:absolute;left:16px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--navy);opacity:.6}
+.offer-banner .offer-close:hover{opacity:1}
+.offer-banner-spacer{height:0;transition:height .5s ease}
+.offer-banner-spacer.visible{height:44px}
+
+/* ========== EXIT POPUP ========== */
+.exit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:2000;align-items:center;justify-content:center}
+.exit-overlay.open{display:flex}
+.exit-popup{background:var(--white);border-radius:24px;padding:48px 40px;max-width:440px;width:90%;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.3);animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.exit-popup h3{font-size:1.6rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+.exit-popup p{font-size:1rem;color:#666;margin-bottom:24px;line-height:1.7}
+.exit-popup .exit-close{position:absolute;top:16px;left:16px;width:32px;height:32px;border-radius:50%;border:none;background:#f0f0f0;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s}
+.exit-popup .exit-close:hover{background:#ddd}
+.exit-popup .exit-input{width:100%;padding:14px 18px;border:2px solid #e8e4dc;border-radius:12px;font-family:'Heebo',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center}
+.exit-popup .exit-input:focus{outline:none;border-color:var(--gold)}
+
+/* ========== SHARE BUTTON ========== */
+.share-friend{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--navy);color:var(--white);border:none;padding:12px 20px;border-radius:50px;font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(15,37,64,.3);transition:all .3s}
+.share-friend:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(15,37,64,.4)}
+.share-friend svg{width:18px;height:18px;fill:var(--white)}
+
 /* ========== RESPONSIVE ========== */
 @media(max-width:1024px){
   .hero-grid{grid-template-columns:1fr;text-align:center}
@@ -466,6 +492,11 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .benefit-body{padding:18px 20px}
   .whatsapp-float{width:52px;height:52px;bottom:16px;left:16px}
   .whatsapp-float svg{width:26px;height:26px}
+  .share-friend{bottom:16px;right:16px;padding:10px 14px;font-size:.78rem}
+  .offer-banner{font-size:.78rem;padding:10px 16px;gap:8px}
+  .offer-banner .offer-timer{font-size:.75rem;padding:3px 8px}
+  .exit-popup{padding:32px 24px}
+  .exit-popup h3{font-size:1.3rem}
 }
 /* Disable 3D mouse effects on touch devices */
 @media(hover:none){
@@ -474,6 +505,25 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 </style>
 </head>
 <body>
+
+<!-- ========== OFFER BANNER ========== -->
+<div class="offer-banner" id="offer-banner">
+  <span>🔥 מבצע השקה — 20% הנחה ל-10 הלקוחות הראשונים!</span>
+  <span class="offer-timer" id="offer-timer">00:00:00</span>
+  <button class="offer-close" onclick="closeOffer()">&times;</button>
+</div>
+<div class="offer-banner-spacer" id="offer-spacer"></div>
+
+<!-- ========== EXIT POPUP ========== -->
+<div class="exit-overlay" id="exit-overlay">
+  <div class="exit-popup">
+    <button class="exit-close" onclick="closeExit()">&times;</button>
+    <h3>רגע! לפני שעוזבים 🪞</h3>
+    <p>השאירו מספר טלפון ונחזור אליכם עם הצעת מחיר מיוחדת — בלי התחייבות</p>
+    <input class="exit-input" type="tel" id="exit-phone" placeholder="050-1234567" dir="ltr">
+    <button class="btn btn-gold" style="width:100%" onclick="sendExit()">שלחו לי הצעה</button>
+  </div>
+</div>
 
 <!-- ========== SCROLL PROGRESS ========== -->
 <div class="scroll-progress" id="scroll-progress"></div>
@@ -1236,6 +1286,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- ========== SHARE BUTTON ========== -->
+<button class="share-friend" onclick="shareFriend()">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  שלח לחבר שיש לו עסק
+</button>
+
 <script>
 // ========== PARTICLES ==========
 (function(){
@@ -1532,6 +1588,61 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
   });
 });
+
+// ========== OFFER BANNER COUNTDOWN ==========
+(function(){
+  // 24-hour countdown from first visit
+  let end=localStorage.getItem('mirror_offer_end');
+  if(!end){
+    end=Date.now()+24*60*60*1000;
+    localStorage.setItem('mirror_offer_end',end);
+  }
+  end=parseInt(end);
+  const banner=document.getElementById('offer-banner');
+  const spacer=document.getElementById('offer-spacer');
+  const timer=document.getElementById('offer-timer');
+  if(localStorage.getItem('mirror_offer_closed'))return;
+  setTimeout(()=>{banner.classList.add('visible');spacer.classList.add('visible')},1500);
+  setInterval(()=>{
+    const diff=end-Date.now();
+    if(diff<=0){timer.textContent='00:00:00';return}
+    const hrs=Math.floor(diff/3600000);
+    const mins=Math.floor((diff%3600000)/60000);
+    const secs=Math.floor((diff%60000)/1000);
+    timer.textContent=String(hrs).padStart(2,'0')+':'+String(mins).padStart(2,'0')+':'+String(secs).padStart(2,'0');
+  },1000);
+})();
+function closeOffer(){
+  document.getElementById('offer-banner').classList.remove('visible');
+  document.getElementById('offer-spacer').classList.remove('visible');
+  localStorage.setItem('mirror_offer_closed','1');
+}
+
+// ========== EXIT INTENT POPUP ==========
+let exitShown=false;
+document.addEventListener('mouseleave',e=>{
+  if(e.clientY<0&&!exitShown&&!localStorage.getItem('mirror_exit_shown')){
+    exitShown=true;
+    document.getElementById('exit-overlay').classList.add('open');
+  }
+});
+function closeExit(){
+  document.getElementById('exit-overlay').classList.remove('open');
+  localStorage.setItem('mirror_exit_shown','1');
+}
+function sendExit(){
+  const phone=document.getElementById('exit-phone').value;
+  if(!phone||phone.length<9){document.getElementById('exit-phone').style.borderColor='#e74c3c';return}
+  const msg=encodeURIComponent('היי, השארתי פרטים באתר ואשמח להצעת מחיר למראה ממותגת 🪞\nטלפון: '+phone);
+  window.open('https://wa.me/972503755705?text='+msg,'_blank');
+  closeExit();
+}
+
+// ========== SHARE TO FRIEND ==========
+function shareFriend(){
+  const msg=encodeURIComponent('היי, ראיתי משהו שיכול להתאים לעסק שלך — מראות ממותגות בסגנון אינסטגרם שגורמות ללקוחות לצלם סלפי ולשתף את העסק 🪞✨\nhttps://mirrorframestudio.github.io/mirror-frame-studio/');
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
 </script>
 
 </body>
