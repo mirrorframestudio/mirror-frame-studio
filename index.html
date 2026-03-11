@@ -1620,8 +1620,10 @@ function closeOffer(){
 
 // ========== EXIT INTENT POPUP ==========
 let exitShown=false;
+let exitReady=false;
+setTimeout(()=>{exitReady=true},5000);
 document.addEventListener('mouseleave',e=>{
-  if(e.clientY<0&&!exitShown&&!localStorage.getItem('mirror_exit_shown')){
+  if(e.clientY<0&&exitReady&&!exitShown&&!localStorage.getItem('mirror_exit_shown')){
     exitShown=true;
     document.getElementById('exit-overlay').classList.add('open');
   }
