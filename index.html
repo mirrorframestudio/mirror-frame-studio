@@ -75,9 +75,23 @@
 }
 </script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪞</text></svg>">
+<link rel="canonical" href="https://mirrorframestudio.github.io/mirror-frame-studio/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+/* ========== PAGE LOADER ========== */
+.page-loader{position:fixed;inset:0;z-index:9999;background:var(--navy-dark,#0a1a2e);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s ease}
+.page-loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mirror{width:64px;height:76px;border-radius:12px;background:linear-gradient(165deg,#e8edf4,#bcc8dc,#e0e8f2);position:relative;animation:loaderPulse 1.4s ease-in-out infinite}
+.loader-mirror::before{content:'🪞';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.loader-mirror::after{content:'';position:absolute;inset:-6px;border-radius:16px;border:2px solid rgba(200,168,75,.4);animation:loaderRing 1.4s ease-in-out infinite}
+@keyframes loaderPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.8}}
+@keyframes loaderRing{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.12);opacity:.8}}
+.loader-text{margin-top:20px;color:rgba(200,168,75,.8);font-family:'Heebo',sans-serif;font-size:.9rem;font-weight:500;letter-spacing:2px}
+.loader-bar{width:120px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:12px;overflow:hidden}
+.loader-bar-fill{width:0%;height:100%;background:linear-gradient(90deg,var(--gold,#C8A84B),var(--gold-light,#d4b85e));border-radius:2px;animation:loaderFill 1.8s ease-in-out forwards}
+@keyframes loaderFill{0%{width:0%}60%{width:75%}100%{width:100%}}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#0F2540;--navy-light:#162d4a;--navy-dark:#0a1a2e;
@@ -609,6 +623,13 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 </style>
 </head>
 <body>
+
+<!-- ========== PAGE LOADER ========== -->
+<div class="page-loader" id="page-loader">
+  <div class="loader-mirror"></div>
+  <div class="loader-text">Mirror Frame Studio</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
 
 <!-- ========== OFFER BANNER ========== -->
 <div class="offer-banner" id="offer-banner">
@@ -1483,6 +1504,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 </button>
 
 <script>
+// ========== PAGE LOADER ==========
+window.addEventListener('load',()=>{
+  const loader=document.getElementById('page-loader');
+  if(loader){setTimeout(()=>loader.classList.add('hidden'),600);setTimeout(()=>loader.remove(),1200)}
+});
+
 // ========== PARTICLES ==========
 (function(){
   const c=document.getElementById('particles');
@@ -1660,7 +1687,36 @@ function sizeProofSlider(){
 sizeProofSlider();
 window.addEventListener('resize',sizeProofSlider);
 // Auto-slide every 5s
-setInterval(()=>moveProof(1),5000);
+let proofAutoSlide=setInterval(()=>moveProof(1),5000);
+// ========== SWIPE SUPPORT FOR TESTIMONIALS ==========
+(function(){
+  if(!proofTrack)return;
+  let startX=0,startY=0,isDragging=false,movedX=0;
+  const slider=proofTrack.parentElement;
+  slider.addEventListener('touchstart',e=>{
+    startX=e.touches[0].clientX;startY=e.touches[0].clientY;isDragging=true;movedX=0;
+    proofTrack.style.transition='none';
+    clearInterval(proofAutoSlide);
+  },{passive:true});
+  slider.addEventListener('touchmove',e=>{
+    if(!isDragging)return;
+    const dx=e.touches[0].clientX-startX;
+    const dy=e.touches[0].clientY-startY;
+    if(Math.abs(dy)>Math.abs(dx)&&Math.abs(movedX)<10)return;
+    movedX=dx;
+    const offset=-proofIndex*100+(dx/slider.offsetWidth)*100;
+    proofTrack.style.transform=`translateX(${offset}%)`;
+  },{passive:true});
+  slider.addEventListener('touchend',()=>{
+    isDragging=false;
+    proofTrack.style.transition='transform .5s cubic-bezier(.4,0,.2,1)';
+    const threshold=slider.offsetWidth*0.2;
+    if(movedX<-threshold)moveProof(1);
+    else if(movedX>threshold)moveProof(-1);
+    else goToProof(proofIndex);
+    proofAutoSlide=setInterval(()=>moveProof(1),5000);
+  });
+})();
 
 // ========== FAQ ACCORDION ==========
 function toggleFaq(item){
