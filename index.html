@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mirror Frame Studio — המראה שמשווקת את העסק שלך</title>
+<meta name="description" content="מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך. בחינם. חשיפה אורגנית ללא תקציב פרסום.">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mirror Frame Studio — המראה שמשווקת את העסק שלך">
+<meta property="og:description" content="מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.">
+<meta property="og:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png">
+<meta property="og:url" content="https://mirrorframestudio.github.io/mirror-frame-studio/">
+<meta property="og:locale" content="he_IL">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mirror Frame Studio — המראה שמשווקת את העסק שלך">
+<meta name="twitter:description" content="מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.">
+<meta name="twitter:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -170,6 +183,23 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .math-result .label{font-size:.8rem;font-weight:600;margin-top:4px;display:block}
 .math-bottom{font-size:1.3rem;color:var(--gold);font-weight:700;margin-top:8px}
 
+/* ========== COMPARISON TABLE ========== */
+.compare-section{background:var(--white)}
+.compare-table{max-width:800px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.06)}
+.compare-table table{width:100%;border-collapse:collapse}
+.compare-table th{padding:18px 20px;font-size:.9rem;font-weight:700;text-align:center}
+.compare-table th:first-child{text-align:right;width:40%}
+.compare-table th.col-ads{background:#f0f0f0;color:#666}
+.compare-table th.col-mirror{background:var(--navy);color:var(--gold)}
+.compare-table td{padding:16px 20px;border-top:1px solid #eee;text-align:center;font-size:.95rem}
+.compare-table td:first-child{text-align:right;font-weight:600;color:var(--navy)}
+.compare-table td.highlight{background:rgba(200,168,75,.06);color:var(--navy);font-weight:700}
+.compare-table .check{color:#27ae60;font-size:1.2rem}
+.compare-table .cross{color:#e74c3c;font-size:1.2rem}
+@media(max-width:768px){
+  .compare-table th,.compare-table td{padding:12px 10px;font-size:.8rem}
+}
+
 /* ========== MIRROR EDITOR ========== */
 .editor-section{background:var(--off-white);position:relative}
 .editor-layout{display:grid;grid-template-columns:400px 1fr;gap:48px;align-items:start}
@@ -237,7 +267,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   background:linear-gradient(165deg,#e8edf4 0%,#d4dce8 15%,#c8d4e4 30%,#bcc8dc 50%,#d0daea 70%,#e0e8f2 85%,#eef2f8 100%)}
 .mirror-surface::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35) 0%,transparent 40%,transparent 60%,rgba(255,255,255,.12) 100%);pointer-events:none;z-index:1}
 .mirror-surface::after{content:'';position:absolute;top:-30%;left:-20%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(255,255,255,.3),transparent 70%);pointer-events:none;z-index:1;transform:rotate(-15deg)}
-.mirror-surface-text{font-size:.85rem;color:rgba(100,120,150,.35);font-weight:300;text-align:center;letter-spacing:1px;pointer-events:none;z-index:2;padding:0 10px}
+.mirror-surface-text{font-size:.85rem;color:rgba(80,100,130,.6);font-weight:500;text-align:center;letter-spacing:1px;pointer-events:none;z-index:2;padding:0 10px}
 .mirror-surface-qr{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:48px;height:48px;background:rgba(255,255,255,.85);border-radius:8px;display:none;align-items:center;justify-content:center;padding:5px;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:3}
 .mirror-surface-qr svg{width:100%;height:100%}
 /* LED glow on the mirror surface */
@@ -569,7 +599,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 <!-- ========== HERO ========== -->
 <section class="hero" id="hero">
   <div class="hero-video-bg">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline poster="images/studio-lak-gal.png">
       <source src="videos/hero-bg.mp4" type="video/mp4">
     </video>
   </div>
@@ -818,7 +848,64 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
           <span class="roi-num" id="roi-monthly">72,000</span>
           <span class="roi-label">חשיפות בחודש</span>
         </div>
+        <div class="roi-result-card" style="border:2px solid var(--gold);background:rgba(200,168,75,.08)">
+          <span class="roi-num" id="roi-money" style="color:var(--gold)">₪2,160</span>
+          <span class="roi-label">שווי חשיפה חודשי בפרסום ממומן</span>
+        </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COMPARISON TABLE ========== -->
+<section class="compare-section section-padding">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title reveal">מראה ממותגת <span class="gold-text">vs פרסום ממומן</span></h2>
+      <p class="section-subtitle reveal">למה מראה ממותגת עדיפה על פרסום רגיל?</p>
+    </div>
+    <div class="compare-table reveal-zoom">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-ads">פרסום ממומן</th>
+            <th class="col-mirror">מראה ממותגת</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>עלות חודשית</td>
+            <td>₪2,000–₪10,000+</td>
+            <td class="highlight">₪0 (השקעה חד פעמית)</td>
+          </tr>
+          <tr>
+            <td>אמינות התוכן</td>
+            <td><span class="cross">✗</span> פרסומת מזוהה</td>
+            <td class="highlight"><span class="check">✓</span> תוכן אותנטי מלקוחות</td>
+          </tr>
+          <tr>
+            <td>משך החשיפה</td>
+            <td>כל עוד משלמים</td>
+            <td class="highlight">שנים — ללא תשלום נוסף</td>
+          </tr>
+          <tr>
+            <td>אפקט ויראלי</td>
+            <td><span class="cross">✗</span> מוגבל לתקציב</td>
+            <td class="highlight"><span class="check">✓</span> כל שיתוף = חשיפה חדשה</td>
+          </tr>
+          <tr>
+            <td>חוויית לקוח</td>
+            <td><span class="cross">✗</span> אין</td>
+            <td class="highlight"><span class="check">✓</span> רגע "וואו" שזוכרים</td>
+          </tr>
+          <tr>
+            <td>ROI לאורך זמן</td>
+            <td>יורד עם הזמן</td>
+            <td class="highlight"><span class="check">✓</span> עולה — ככל שיש יותר לקוחות</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -980,12 +1067,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
               <!-- Save -->
               <svg class="ig-save" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
             </div>
-            <div class="ig-post-stats"><span id="mirror-likes">1,234</span> likes</div>
+            <div class="ig-post-stats"><span id="mirror-likes">1,234</span> לייקים</div>
             <div class="ig-post-caption">
               <b id="mirror-username">mirror_frame_studio</b> <span id="mirror-caption">✨ בואו לבקר אותנו!</span>
             </div>
-            <div class="ig-post-comments-link">View all <span id="mirror-comments-count">56</span> comments</div>
-            <div class="ig-post-time">2 hours ago</div>
+            <div class="ig-post-comments-link">הצג את כל <span id="mirror-comments-count">56</span> התגובות</div>
+            <div class="ig-post-time">לפני שעתיים</div>
             <!-- Bottom nav -->
             <div class="ig-bottomnav">
               <!-- Home (filled) -->
@@ -1272,6 +1359,10 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
           <input type="tel" id="form-phone" required placeholder="050-0000000">
         </div>
         <div class="field-group">
+          <label>אימייל</label>
+          <input type="email" id="form-email" placeholder="your@email.com" dir="ltr">
+        </div>
+        <div class="field-group">
           <label>סוג עסק</label>
           <select id="form-type" required>
             <option value="">בחרו סוג עסק</option>
@@ -1524,9 +1615,12 @@ function calcROI(){
   const postsWeek=Math.round(customers*days*(pct/100));
   const viewsWeek=postsWeek*followers;
   const viewsMonth=viewsWeek*4;
+  // CPM ~30 ILS average for Instagram in Israel
+  const moneyValue=Math.round(viewsMonth/1000*30);
   document.getElementById('roi-posts').textContent=postsWeek.toLocaleString();
   document.getElementById('roi-views').textContent=viewsWeek.toLocaleString();
   document.getElementById('roi-monthly').textContent=viewsMonth.toLocaleString();
+  document.getElementById('roi-money').textContent='₪'+moneyValue.toLocaleString();
 }
 calcROI();
 
@@ -1598,12 +1692,13 @@ function handleSubmit(e){
   const business=document.getElementById('form-business').value;
   const name=document.getElementById('form-name').value;
   const phone=document.getElementById('form-phone').value;
+  const email=document.getElementById('form-email').value;
   const typeEl=document.getElementById('form-type');
   const typeText=typeEl.options[typeEl.selectedIndex].text;
 
   // Store in localStorage
   const leads=JSON.parse(localStorage.getItem('mirror_leads')||'[]');
-  leads.push({business,name,phone,type:typeEl.value,timestamp:new Date().toISOString()});
+  leads.push({business,name,phone,email,type:typeEl.value,timestamp:new Date().toISOString()});
   localStorage.setItem('mirror_leads',JSON.stringify(leads));
 
   // Show thank you
@@ -1611,7 +1706,8 @@ function handleSubmit(e){
   document.getElementById('thank-you').style.display='block';
 
   // Open WhatsApp immediately with full details
-  const msg=encodeURIComponent(`היי, אני מתעניין/ת במראה ממותגת 🪞\n\nשם העסק: ${business}\nשם: ${name}\nטלפון: ${phone}\nסוג עסק: ${typeText}\n\nאשמח לשמוע פרטים נוספים!`);
+  const emailLine=email?`\nאימייל: ${email}`:'';
+  const msg=encodeURIComponent(`היי, אני מתעניין/ת במראה ממותגת 🪞\n\nשם העסק: ${business}\nשם: ${name}\nטלפון: ${phone}${emailLine}\nסוג עסק: ${typeText}\n\nאשמח לשמוע פרטים נוספים!`);
   window.open(`https://wa.me/972503755705?text=${msg}`,'_blank');
 }
 
@@ -1663,6 +1759,21 @@ document.addEventListener('mouseleave',e=>{
     document.getElementById('exit-overlay').classList.add('open');
   }
 });
+// Mobile exit intent: detect quick scroll-up (user heading to address bar / back)
+let lastScrollY=window.scrollY;
+let scrollUpCount=0;
+window.addEventListener('scroll',()=>{
+  if(!exitReady||exitShown||localStorage.getItem('mirror_exit_shown'))return;
+  const diff=lastScrollY-window.scrollY;
+  if(diff>60&&window.scrollY>400){
+    scrollUpCount++;
+    if(scrollUpCount>=2){
+      exitShown=true;
+      document.getElementById('exit-overlay').classList.add('open');
+    }
+  }else if(diff<0){scrollUpCount=0}
+  lastScrollY=window.scrollY;
+},{passive:true});
 function closeExit(){
   document.getElementById('exit-overlay').classList.remove('open');
   localStorage.setItem('mirror_exit_shown','1');
