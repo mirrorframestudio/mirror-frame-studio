@@ -17,6 +17,64 @@
 <meta name="twitter:title" content="Mirror Frame Studio — המראה שמשווקת את העסק שלך">
 <meta name="twitter:description" content="מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.">
 <meta name="twitter:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png">
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Mirror Frame Studio",
+  "description": "מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.",
+  "url": "https://mirrorframestudio.github.io/mirror-frame-studio/",
+  "image": "https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png",
+  "telephone": "+972503755705",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IL"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "5",
+    "bestRating": "5"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "גלית כהן"},
+      "reviewBody": "תוך שבוע המראה הניבה 14 פוסטים אורגניים של לקוחות שתייגו את הסטודיו.",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5"}
+    },
+    {
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "מיכל לוי"},
+      "reviewBody": "הלקוחות שלנו לא מפסיקות לצלם ליד המראה. ההשקעה הכי טובה שעשינו לעסק.",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5"}
+    },
+    {
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "נועה שמעון"},
+      "reviewBody": "הזמנתי מראה לבוטיק ותוך חודש ראיתי עלייה של 30% בעוקבים באינסטגרם.",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5"}
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "מראה ממותגת בעיצוב אינסטגרם",
+  "description": "מראת אקריליק ממותגת עם תאורת LED, בעיצוב פוסט אינסטגרם — הלקוחות מצלמים סלפי ומשתפים את העסק שלכם.",
+  "brand": {"@type": "Brand", "name": "Mirror Frame Studio"},
+  "image": "https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "ILS",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪞</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -404,9 +462,16 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .faq-answer-inner{padding:0 28px 20px;color:#555;font-size:.95rem;line-height:1.8}
 
 /* ========== WHATSAPP FLOAT ========== */
-.whatsapp-float{position:fixed;bottom:24px;left:24px;width:60px;height:60px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);z-index:999;transition:all .3s;cursor:pointer;text-decoration:none}
+.wa-wrapper{position:fixed;bottom:24px;left:24px;z-index:999}
+.whatsapp-float{width:60px;height:60px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer;text-decoration:none;position:relative}
 .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(37,211,102,.5)}
 .whatsapp-float svg{width:32px;height:32px;fill:white}
+.wa-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid #25d366;animation:waPulse 2s infinite;pointer-events:none}
+@keyframes waPulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+.wa-bubble{position:absolute;bottom:70px;left:0;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 4px 24px rgba(0,0,0,.12);width:220px;font-size:.85rem;color:var(--navy);line-height:1.6;opacity:0;transform:translateY(10px);transition:all .4s ease;pointer-events:none}
+.wa-bubble.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.wa-bubble::after{content:'';position:absolute;bottom:-8px;left:24px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #fff}
+.wa-bubble-close{position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:50%;border:none;background:#f0f0f0;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:auto}
 
 /* ========== SCROLL PROGRESS BAR ========== */
 .scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));z-index:1002;width:0%;transition:width .1s linear}
@@ -527,8 +592,10 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .proof-card{padding:28px 20px}
   .proof-card p{font-size:1rem}
   .benefit-body{padding:18px 20px}
-  .whatsapp-float{width:52px;height:52px;bottom:16px;left:16px}
+  .wa-wrapper{bottom:16px;left:16px}
+  .whatsapp-float{width:52px;height:52px}
   .whatsapp-float svg{width:26px;height:26px}
+  .wa-bubble{width:190px;font-size:.8rem;padding:12px 14px}
   .share-friend{bottom:16px;right:16px;padding:10px 14px;font-size:.78rem}
   .offer-banner{font-size:.78rem;padding:10px 16px;gap:8px}
   .offer-banner .offer-timer{font-size:.75rem;padding:3px 8px}
@@ -1398,9 +1465,16 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 </footer>
 
 <!-- ========== WHATSAPP FLOAT ========== -->
-<a href="https://wa.me/972503755705?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%9E%D7%A8%D7%90%D7%94%20%D7%9E%D7%9E%D7%95%D7%AA%D7%92%D7%AA" target="_blank" class="whatsapp-float" title="שלחו הודעה בוואטסאפ">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+<div class="wa-wrapper">
+  <div class="wa-bubble" id="wa-bubble">
+    <button class="wa-bubble-close" onclick="document.getElementById('wa-bubble').classList.remove('show')">&times;</button>
+    היי! רוצים לשמוע על מראה ממותגת לעסק שלכם? דברו איתנו
+  </div>
+  <a href="https://wa.me/972503755705?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%9E%D7%A8%D7%90%D7%94%20%D7%9E%D7%9E%D7%95%D7%AA%D7%92%D7%AA" target="_blank" class="whatsapp-float" title="שלחו הודעה בוואטסאפ">
+    <div class="wa-pulse"></div>
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
 
 <!-- ========== SHARE BUTTON ========== -->
 <button class="share-friend" onclick="shareFriend()">
@@ -1785,6 +1859,16 @@ function sendExit(){
   window.open('https://wa.me/972503755705?text='+msg,'_blank');
   closeExit();
 }
+
+// ========== WHATSAPP BUBBLE ==========
+setTimeout(()=>{
+  const bubble=document.getElementById('wa-bubble');
+  if(bubble&&!localStorage.getItem('mirror_wa_bubble_closed')){
+    bubble.classList.add('show');
+    // Auto-hide after 8s
+    setTimeout(()=>bubble.classList.remove('show'),8000);
+  }
+},10000);
 
 // ========== SHARE TO FRIEND ==========
 function shareFriend(){
