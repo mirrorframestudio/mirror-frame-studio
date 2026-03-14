@@ -9,14 +9,14 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mirror Frame Studio — המראה שמשווקת את העסק שלך">
 <meta property="og:description" content="מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.">
-<meta property="og:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png">
+<meta property="og:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.jpg">
 <meta property="og:url" content="https://mirrorframestudio.github.io/mirror-frame-studio/">
 <meta property="og:locale" content="he_IL">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mirror Frame Studio — המראה שמשווקת את העסק שלך">
 <meta name="twitter:description" content="מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.">
-<meta name="twitter:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png">
+<meta name="twitter:image" content="https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.jpg">
 <!-- Schema.org Structured Data -->
 <script type="application/ld+json">
 {
@@ -25,7 +25,7 @@
   "name": "Mirror Frame Studio",
   "description": "מראות אקריליק ממותגות בעיצוב אינסטגרם — כל סלפי של לקוח הופך לפוסט שמפרסם את העסק שלך בחינם.",
   "url": "https://mirrorframestudio.github.io/mirror-frame-studio/",
-  "image": "https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png",
+  "image": "https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.jpg",
   "telephone": "+972503755705",
   "address": {
     "@type": "PostalAddress",
@@ -40,7 +40,7 @@
   "name": "מראה ממותגת בעיצוב אינסטגרם",
   "description": "מראת אקריליק ממותגת עם תאורת LED, בעיצוב פוסט אינסטגרם — הלקוחות מצלמים סלפי ומשתפים את העסק שלכם.",
   "brand": {"@type": "Brand", "name": "Mirror Frame Studio"},
-  "image": "https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.png",
+  "image": "https://mirrorframestudio.github.io/mirror-frame-studio/images/studio-lak-gal.jpg",
   "offers": {
     "@type": "Offer",
     "priceCurrency": "ILS",
@@ -198,37 +198,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .flow-arrow svg{width:32px;height:32px;fill:var(--gold);filter:drop-shadow(0 2px 6px rgba(200,168,75,.3));animation:bounceArrow 2s ease-in-out infinite}
 @keyframes bounceArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-/* ========== BENEFITS ========== */
-.benefits{background:var(--white)}
-.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.benefit-card{background:var(--off-white);border-radius:20px;overflow:hidden;transition:all .4s ease;border:2px solid transparent}
-.benefit-card:hover{border-color:var(--gold);transform:translateY(-6px);box-shadow:0 16px 48px rgba(200,168,75,.12)}
-.benefit-img{width:100%;height:200px;object-fit:cover}
-.benefit-body{padding:24px 28px}
-.benefit-icon-badge{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:14px}
-.benefit-body h4{font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:8px}
-.benefit-body p{font-size:.9rem;color:#666;line-height:1.7}
-/* Wide benefit highlight row */
-.benefit-highlight{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:28px}
-.benefit-highlight-card{background:var(--navy);border-radius:20px;padding:40px;color:var(--white);display:flex;gap:24px;align-items:center;transition:all .4s ease}
-.benefit-highlight-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(15,37,64,.3)}
-.benefit-highlight-card img{width:180px;height:180px;border-radius:16px;object-fit:cover;flex-shrink:0}
-.benefit-highlight-text h4{font-size:1.25rem;font-weight:700;color:var(--gold);margin-bottom:10px}
-.benefit-highlight-text p{font-size:.95rem;color:rgba(255,255,255,.75);line-height:1.7}
-
-/* ========== MATH SECTION ========== */
-.math-section{background:var(--navy);color:var(--white);text-align:center;position:relative;overflow:hidden}
-.math-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='rgba(200,168,75,0.04)' stroke-width='1'/%3E%3C/svg%3E");pointer-events:none}
-.math-equation{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin:48px 0 32px;font-size:clamp(1rem,3vw,1.8rem);font-weight:700}
-.math-num{background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);padding:16px 28px;border-radius:16px;color:var(--gold);min-width:120px}
-.math-num .big{display:block;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;line-height:1}
-.math-num .label{font-size:.8rem;font-weight:400;color:rgba(255,255,255,.6);margin-top:4px;display:block}
-.math-op{color:var(--gold);font-size:2rem}
-.math-result{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);padding:20px 36px;border-radius:16px;box-shadow:0 8px 30px rgba(200,168,75,.3)}
-.math-result .big{display:block;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;line-height:1}
-.math-result .label{font-size:.8rem;font-weight:600;margin-top:4px;display:block}
-.math-bottom{font-size:1.3rem;color:var(--gold);font-weight:700;margin-top:8px}
-
 /* ========== COMPARISON TABLE ========== */
 .compare-section{background:var(--white)}
 .compare-table{max-width:800px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.06)}
@@ -362,14 +331,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .guarantee-item h4{font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:8px}
 .guarantee-item p{font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.7}
 
-/* ========== MATERIALS ========== */
-.materials{background:var(--white)}
-.materials-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.material-card{padding:32px 20px;text-align:center;border-radius:16px;background:var(--off-white);transition:all .3s}
-.material-card:hover{transform:translateY(-5px);box-shadow:0 8px 30px rgba(0,0,0,.06)}
-.material-icon{font-size:2.5rem;margin-bottom:16px}
-.material-card h4{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
-.material-card p{font-size:.85rem;color:#666}
 
 /* ========== WHO IS IT FOR ========== */
 .target{background:var(--off-white)}
@@ -500,11 +461,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .editor-layout{grid-template-columns:1fr}
   .editor-sidebar{position:static;max-height:none}
   .mirror-preview-area{margin-top:40px}
-  .materials-grid{grid-template-columns:repeat(2,1fr)}
   .target-grid{grid-template-columns:repeat(3,1fr)}
-  .benefits-grid{grid-template-columns:repeat(2,1fr)}
-  .benefit-highlight{grid-template-columns:1fr}
-  .benefit-highlight-card img{width:140px;height:140px}
   .nav-links{display:none}
   .nav-hamburger{display:flex}
 }
@@ -517,17 +474,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .flow-card::before,.flow-card::after{display:none!important}
   .flowchart::before{right:36px;transform:none}
   .flow-node{margin:0 auto}
-  .math-equation{flex-direction:column}
-  .materials-grid{grid-template-columns:1fr 1fr}
   .target-grid{grid-template-columns:1fr 1fr}
   .roi-inputs{grid-template-columns:1fr}
   .roi-results{grid-template-columns:1fr}
   .roi-card{padding:28px 20px}
   .guarantee-grid{grid-template-columns:1fr}
   .guarantee-item{padding:24px 16px}
-  .benefits-grid{grid-template-columns:1fr}
-  .benefit-highlight-card{flex-direction:column;text-align:center}
-  .benefit-highlight-card img{width:100%;height:180px}
   .section-padding{padding:60px 0}
   .hero{padding-top:70px;min-height:auto;padding-bottom:60px}
   .hero-mirror-img{max-width:260px;border-radius:16px}
@@ -560,15 +512,12 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .nav-logo{font-size:1rem}
   .nav-logo-icon{width:32px;height:32px;font-size:.85rem}
   /* Math section mobile */
-  .math-num{padding:14px 20px;min-width:100px}
-  .math-result{padding:16px 24px}
   /* Section titles */
   .section-title{font-size:clamp(1.6rem,5vw,2.5rem)}
   .section-subtitle{font-size:1rem;margin-bottom:32px}
 }
 @media(max-width:480px){
   .target-grid{grid-template-columns:1fr}
-  .materials-grid{grid-template-columns:1fr}
   .form-card{padding:28px 20px}
   .iphone-shell{max-width:280px}
   .flow-img img{max-width:240px}
@@ -579,7 +528,6 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .editor-sidebar{padding:20px 16px}
   .proof-card{padding:28px 20px}
   .proof-card p{font-size:1rem}
-  .benefit-body{padding:18px 20px}
   .wa-wrapper{bottom:16px;left:16px}
   .whatsapp-float{width:52px;height:52px}
   .whatsapp-float svg{width:26px;height:26px}
@@ -594,6 +542,11 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 @media(hover:none){
   .tilt-card:hover{transform:translateY(-6px)!important}
 }
+/* ========== SCROLL TO TOP ========== */
+.scroll-top{position:fixed;bottom:90px;left:24px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--gold);border:1px solid rgba(200,168,75,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(10px);transition:all .3s;z-index:998;font-size:1.2rem;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.scroll-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.scroll-top:hover{background:var(--gold);color:var(--navy)}
+@media(max-width:480px){.scroll-top{bottom:80px;left:16px;width:38px;height:38px;font-size:1rem}}
 </style>
 </head>
 <body>
@@ -657,7 +610,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 <!-- ========== HERO ========== -->
 <section class="hero" id="hero">
   <div class="hero-video-bg">
-    <video autoplay muted loop playsinline poster="images/studio-lak-gal.png">
+    <video autoplay muted loop playsinline poster="images/studio-lak-gal.jpg" preload="none">
       <source src="videos/hero-bg.mp4" type="video/mp4">
     </video>
   </div>
@@ -679,7 +632,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
       </div>
       <div class="hero-mirror-side">
         <div class="hero-mirror-glow"></div>
-        <img class="hero-mirror-img" src="images/Gemini_Generated_Image_6jorzf6jorzf6jor.png" alt="מראה ממותגת בעיצוב אינסטגרם">
+        <img class="hero-mirror-img" src="images/Gemini_Generated_Image_6jorzf6jorzf6jor.jpg" alt="מראה ממותגת בעיצוב אינסטגרם">
       </div>
     </div>
   </div>
@@ -696,7 +649,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
       <!-- Step 1 -->
       <div class="flow-step reveal">
         <div class="flow-img">
-          <img src="images/Gemini_Generated_Image_6jorzf6jorzf6jor.png" alt="מראה ממותגת תלויה על קיר בעסק" loading="lazy">
+          <img src="images/Gemini_Generated_Image_6jorzf6jorzf6jor.jpg" alt="מראה ממותגת תלויה על קיר בעסק" loading="lazy">
         </div>
         <div class="flow-node">1</div>
         <div class="flow-content">
@@ -712,7 +665,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
       <!-- Step 2 -->
       <div class="flow-step reveal">
         <div class="flow-img">
-          <img src="images/Gemini_Generated_Image_z8jir3z8jir3z8ji.png" alt="לקוחה מצלמת סלפי במראה ממותגת" loading="lazy">
+          <img src="images/Gemini_Generated_Image_z8jir3z8jir3z8ji.jpg" alt="לקוחה מצלמת סלפי במראה ממותגת" loading="lazy">
         </div>
         <div class="flow-node">2</div>
         <div class="flow-content">
@@ -1108,19 +1061,19 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
     <h2 class="section-title reveal" style="color:var(--white)">מה הלקוחות <span class="gold-text">אומרים</span></h2>
     <div class="real-gallery reveal">
       <div class="real-gallery-item">
-        <img src="images/studio-lak-gal.png" alt="מראה ממותגת בסטודיו לק ניילס תל אביב" loading="lazy">
+        <img src="images/studio-lak-gal.jpg" alt="מראה ממותגת בסטודיו לק ניילס תל אביב" loading="lazy">
         <div class="gallery-label">סטודיו לק גל — תל אביב</div>
       </div>
       <div class="real-gallery-item">
-        <img src="images/pilates-rishon.png" alt="מתאמנות מצטלמות במראה ממותגת פילאטיס פיט ראשון" loading="lazy">
+        <img src="images/pilates-rishon.jpg" alt="מתאמנות מצטלמות במראה ממותגת פילאטיס פיט ראשון" loading="lazy">
         <div class="gallery-label">פילאטיס פיט — ראשון לציון</div>
       </div>
       <div class="real-gallery-item">
-        <img src="images/Gemini_Generated_Image_z8jir3z8jir3z8ji.png" alt="מראה ממותגת בסטודיו פילאטיס" loading="lazy">
+        <img src="images/Gemini_Generated_Image_z8jir3z8jir3z8ji.jpg" alt="מראה ממותגת בסטודיו פילאטיס" loading="lazy">
         <div class="gallery-label">פילאטיס פיט — ראשון לציון</div>
       </div>
       <div class="real-gallery-item">
-        <img src="images/Gemini_Generated_Image_6jorzf6jorzf6jor.png" alt="סלפי במראה ממותגת" loading="lazy">
+        <img src="images/Gemini_Generated_Image_6jorzf6jorzf6jor.jpg" alt="סלפי במראה ממותגת" loading="lazy">
         <div class="gallery-label">פילאטיס פיט — ראשון לציון</div>
       </div>
     </div>
@@ -1286,6 +1239,9 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 </div>
+
+<!-- ========== SCROLL TO TOP ========== -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="חזרה למעלה">&#8593;</button>
 
 <!-- ========== SHARE BUTTON ========== -->
 <button class="share-friend" onclick="shareFriend()">
@@ -1540,6 +1496,7 @@ function handlePhoto(e){
 }
 
 // ========== FORM ==========
+const SHEETS_URL='REPLACE_WITH_YOUR_APPS_SCRIPT_URL';
 function handleSubmit(e){
   e.preventDefault();
   const business=document.getElementById('form-business').value;
@@ -1549,10 +1506,17 @@ function handleSubmit(e){
   const typeEl=document.getElementById('form-type');
   const typeText=typeEl.options[typeEl.selectedIndex].text;
 
-  // Store in localStorage
+  // Store in localStorage as backup
   const leads=JSON.parse(localStorage.getItem('mirror_leads')||'[]');
   leads.push({business,name,phone,email,type:typeEl.value,timestamp:new Date().toISOString()});
   localStorage.setItem('mirror_leads',JSON.stringify(leads));
+
+  // Send to Google Sheets (fire and forget)
+  if(SHEETS_URL&&!SHEETS_URL.startsWith('REPLACE')){
+    fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({business,name,phone,email,type:typeText,timestamp:new Date().toISOString()})
+    }).catch(()=>{});
+  }
 
   // Show thank you
   document.getElementById('lead-form').style.display='none';
@@ -1563,6 +1527,15 @@ function handleSubmit(e){
   const msg=encodeURIComponent(`היי, אני מתעניין/ת במראה ממותגת 🪞\n\nשם העסק: ${business}\nשם: ${name}\nטלפון: ${phone}${emailLine}\nסוג עסק: ${typeText}\n\nאשמח לשמוע פרטים נוספים!`);
   window.open(`https://wa.me/972503755705?text=${msg}`,'_blank');
 }
+
+// ========== SCROLL TO TOP ==========
+(function(){
+  const btn=document.getElementById('scroll-top');
+  if(!btn)return;
+  window.addEventListener('scroll',()=>{
+    btn.classList.toggle('visible',window.scrollY>600);
+  },{passive:true});
+})();
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
