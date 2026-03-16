@@ -2186,7 +2186,7 @@ function handlePhoto(e){
 }
 
 // ========== MULTI-STEP FORM ==========
-const SHEETS_URL='https://script.google.com/macros/s/AKfycbwPlCQzJQesu5GSDSRLQ-6Q0dZDFyr7cS9NAu2XrWLqvvmgdT3KdElwDX5DFHx_ScGkHg/exec';
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbwwb4GYpXtdg-X3QnlN5iZz4wBw3yZOGsf4Am5pQ7jiRCCGJLbJ_Ro--qIWtsrOTkhZMg/exec';
 let currentFormStep=1;
 
 function selectBizType(card){
@@ -2274,11 +2274,20 @@ function handleMultiStepSubmit(e){
   leads.push({business,name,phone,email,type:typeVal,timestamp:new Date().toISOString()});
   localStorage.setItem('mirror_leads',JSON.stringify(leads));
 
-  // Send to Google Sheets (fire and forget)
+  // Send to Google Sheets via hidden form
   if(SHEETS_URL&&!SHEETS_URL.startsWith('REPLACE')){
-    fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({business,name,phone,email,type:typeText,timestamp:new Date().toISOString()})
-    }).catch(()=>{});
+    var iframe=document.createElement('iframe');
+    iframe.name='sheets_iframe';iframe.style.display='none';
+    document.body.appendChild(iframe);
+    var f=document.createElement('form');
+    f.method='POST';f.action=SHEETS_URL;f.target='sheets_iframe';
+    ['business','name','phone','email','type','timestamp'].forEach(function(k){
+      var inp=document.createElement('input');inp.type='hidden';inp.name=k;
+      inp.value={business:business,name:name,phone:phone,email:email,type:typeText,timestamp:new Date().toISOString()}[k];
+      f.appendChild(inp);
+    });
+    document.body.appendChild(f);f.submit();
+    setTimeout(function(){iframe.remove();f.remove();},5000);
   }
 
   // Meta Pixel: Lead event
