@@ -2281,6 +2281,9 @@ function handleMultiStepSubmit(e){
     }).catch(()=>{});
   }
 
+  // Meta Pixel: Lead event
+  if(typeof fbq==='function') fbq('track','Lead',{content_name:business,content_category:typeText});
+
   // Show thank you step with confetti
   document.getElementById('lead-form').style.display='none';
   document.getElementById('form-step-4').classList.add('active');
@@ -3047,6 +3050,20 @@ const _origToggle=typeof toggleMobileMenu==='function'?toggleMobileMenu:null;
     banner.classList.add('hidden');
   });
 })();
+</script>
+
+<!-- Meta Pixel Events: Contact (WhatsApp/Phone) -->
+<script>
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href*="wa.me"],a[href*="whatsapp"],a[href^="tel:"],.whatsapp-float');
+  if(a && typeof fbq==='function'){
+    if(a.href && a.href.includes('tel:')) {
+      fbq('track','Contact',{content_name:'Phone Call'});
+    } else {
+      fbq('track','Contact',{content_name:'WhatsApp'});
+    }
+  }
+});
 </script>
 
 </body>
