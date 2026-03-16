@@ -332,7 +332,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .hero-cta-row{display:flex;gap:16px;flex-wrap:wrap}
 /* Hero mirror image */
 .hero-mirror-side{display:flex;justify-content:center;align-items:center;position:relative}
-.hero-mirror-img{max-width:420px;width:100%;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 80px rgba(200,168,75,.15);transition:transform .5s ease-out;transform-style:preserve-3d}
+.hero-mirror-img{max-width:340px;max-height:450px;width:100%;object-fit:contain;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 80px rgba(200,168,75,.15);transition:transform .5s ease-out;transform-style:preserve-3d}
 .hero-mirror-glow{position:absolute;inset:-20px;border-radius:40px;background:radial-gradient(ellipse,rgba(200,168,75,.12) 0%,transparent 70%);z-index:-1;animation:glowPulse 4s ease-in-out infinite}
 @keyframes glowPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.03)}}
 
@@ -563,7 +563,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .thank-you p{color:#666;margin-bottom:24px}
 
 /* ========== FOOTER ========== */
-.footer{background:var(--navy-dark);color:rgba(255,255,255,.6);text-align:center;padding:32px 0;font-size:.85rem}
+.footer{background:var(--navy-dark);color:rgba(255,255,255,.6);text-align:center;padding:32px 0 80px;font-size:.85rem}
 .footer a{color:var(--gold);text-decoration:none}
 .footer .social-links{margin-bottom:12px}
 .footer .social-links a{font-size:1.2rem;margin:0 8px;transition:color .3s}
@@ -656,7 +656,7 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
   .guarantee-item{padding:24px 16px}
   .section-padding{padding:60px 0}
   .hero{padding-top:70px;min-height:auto;padding-bottom:60px}
-  .hero-mirror-img{max-width:260px;border-radius:16px}
+  .hero-mirror-img{max-width:220px;border-radius:16px}
   .hero-mirror-glow{inset:-12px}
   .iphone-shell{width:100%;max-width:320px}
   .ig-post-header{padding:8px 10px;gap:8px}
@@ -950,8 +950,8 @@ body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--whit
 .mj-step-label.on-dark{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
 /* Responsive */
 @media(max-width:1024px){.mj-mirror{width:240px;height:320px}}
-@media(max-width:768px){.mj-mirror{width:150px;height:200px;opacity:.5}.mj-mirror.on-dark{opacity:.65}.mj-step-label{font-size:.65rem;padding:4px 12px}}
-@media(max-width:480px){.mj-mirror{width:110px;height:150px;opacity:.45}.mj-mirror.on-dark{opacity:.6}.mj-step-label{font-size:.55rem;padding:3px 8px}}
+@media(max-width:768px){.mj-mirror{display:none!important}.mj-step-label{font-size:.65rem;padding:4px 12px}}
+@media(max-width:480px){.mj-step-label{font-size:.55rem;padding:3px 8px}}
 
 /* ========== GOLD SECTION DIVIDER ========== */
 .gold-divider{height:2px;border:none;margin:0;background:linear-gradient(90deg,transparent 0%,rgba(200,168,75,.1) 15%,var(--gold) 50%,rgba(200,168,75,.1) 85%,transparent 100%)}
@@ -1042,6 +1042,41 @@ img{image-rendering:auto}
 }
 .made-in-israel.visible{opacity:1;transform:translateY(0)}
 @media(max-width:480px){.made-in-israel{top:65px;right:12px;font-size:.65rem;padding:4px 10px}}
+
+/* ========== MOBILE OPTIMIZATIONS ========== */
+@media(max-width:768px){
+  /* Hide sticky editor preview on mobile — it overlaps content */
+  .editor-sticky-preview{display:none!important}
+  /* ROI section — prevent image overlap on title */
+  .roi-section{overflow:hidden}
+  .roi-section .section-title{font-size:1.5rem;padding:0 8px}
+  .roi-section .section-subtitle{font-size:.9rem;padding:0 8px}
+  /* ROI card — no overlap from mirror decoration */
+  .roi-card{position:relative;z-index:2}
+  /* Footer phone — prevent line break */
+  .footer .social-links+p{word-break:keep-all;white-space:nowrap;font-size:.78rem}
+  /* Better spacing for form on mobile */
+  .lead-section .section-title{font-size:1.5rem}
+  /* Gallery items full width */
+  .real-gallery{gap:8px}
+  .real-gallery-item{border-radius:12px}
+  /* Proof section — better card sizing */
+  .proof-card{margin:0 8px}
+  /* Better touch targets */
+  .btn{min-height:48px}
+  /* Exit popup better on mobile */
+  .exit-popup{width:92%;max-width:360px}
+}
+@media(max-width:480px){
+  /* Even smaller screens */
+  .section-title{font-size:1.4rem!important}
+  .section-subtitle{font-size:.88rem!important}
+  .hero h1{font-size:1.6rem!important;line-height:1.3}
+  .hero p{font-size:.92rem!important;padding:0 8px}
+  /* Footer compact */
+  .footer{padding:24px 16px;font-size:.75rem}
+  .footer .social-links+p{font-size:.72rem;white-space:normal}
+}
 </style>
 </head>
 <body>
