@@ -826,6 +826,120 @@ const _origToggle=typeof toggleMobileMenu==='function'?toggleMobileMenu:null;
 // We'll hook into the hamburger click below
 
 
+// ========== PREMIUM 3D ANIMATIONS ==========
+(function(){
+  if(window.matchMedia('(max-width:768px)').matches) return;
+
+  // ── Gallery items: individual mouse-follow 3D tilt ──
+  document.querySelectorAll('.real-gallery-item').forEach(item=>{
+    item.addEventListener('mousemove',e=>{
+      const rect=item.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width-.5;
+      const y=(e.clientY-rect.top)/rect.height-.5;
+      item.style.transform=`perspective(800px) rotateY(${x*20}deg) rotateX(${-y*15}deg) scale(1.06)`;
+      item.style.boxShadow=`${-x*30}px ${y*30}px 60px rgba(0,0,0,.3),0 0 30px rgba(200,168,75,.12)`;
+    });
+    item.addEventListener('mouseleave',()=>{
+      item.style.transform='';
+      item.style.boxShadow='';
+    });
+  });
+
+  // ── Hero mirror: enhanced parallax with reflection ──
+  const heroSide=document.querySelector('.hero-mirror-side');
+  const heroImg=document.querySelector('.hero-mirror-img');
+  if(heroSide&&heroImg){
+    heroSide.addEventListener('mousemove',e=>{
+      const rect=heroSide.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width-.5;
+      const y=(e.clientY-rect.top)/rect.height-.5;
+      heroImg.style.transform=`rotateY(${x*22}deg) rotateX(${-y*14}deg) translateZ(20px)`;
+      heroImg.style.transition='transform .08s ease-out';
+      // Move the reflection glint
+      const glint=heroSide.querySelector('::after');
+      heroSide.style.setProperty('--glint-x',`${50+x*40}%`);
+      heroSide.style.setProperty('--glint-y',`${50+y*40}%`);
+    });
+    heroSide.addEventListener('mouseleave',()=>{
+      heroImg.style.transform='';
+      heroImg.style.transition='transform .6s cubic-bezier(.22,1,.36,1)';
+    });
+  }
+
+  // ── Scroll-driven 3D depth for sections ──
+  let ticking=false;
+  function onScrollParallax(){
+    const scrollY=window.scrollY;
+    const vh=window.innerHeight;
+
+    // Parallax depth on section elements
+    document.querySelectorAll('.flow-step,.guarantee-item,.target-card,.stat-item').forEach(el=>{
+      const rect=el.getBoundingClientRect();
+      if(rect.top<vh&&rect.bottom>0){
+        const progress=(vh-rect.top)/(vh+rect.height);
+        const depth=Math.sin(progress*Math.PI)*12;
+        const rotX=(progress-.5)*-4;
+        el.style.transform=`perspective(1000px) translateZ(${depth}px) rotateX(${rotX}deg)`;
+      }
+    });
+
+    // Hero video parallax
+    const heroVideo=document.querySelector('.hero-video-bg');
+    if(heroVideo&&scrollY<vh){
+      heroVideo.style.transform=`translateY(${scrollY*.3}px) scale(${1+scrollY*0.0002})`;
+    }
+
+    ticking=false;
+  }
+  window.addEventListener('scroll',()=>{
+    if(!ticking){ticking=true;requestAnimationFrame(onScrollParallax);}
+  },{passive:true});
+
+  // ── iPhone editor: gyroscope-like idle float ──
+  const iphone=document.querySelector('.iphone-shell');
+  if(iphone){
+    let angle=0;
+    function floatIphone(){
+      angle+=0.008;
+      const rotX=Math.sin(angle)*2;
+      const rotY=Math.cos(angle*0.7)*3;
+      const ty=Math.sin(angle*0.5)*4;
+      // Only apply idle float if not being hovered
+      if(!iphone.matches(':hover')&&!iphone.dataset.hovered){
+        iphone.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(${ty}px)`;
+      }
+      requestAnimationFrame(floatIphone);
+    }
+    floatIphone();
+    const edArea=document.querySelector('.mirror-preview-area');
+    if(edArea){
+      edArea.addEventListener('mouseenter',()=>iphone.dataset.hovered='1');
+      edArea.addEventListener('mouseleave',()=>{delete iphone.dataset.hovered;});
+    }
+  }
+
+  // ── ROI result cards stagger pop ──
+  const roiObserver=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.querySelectorAll('.roi-result-card').forEach((card,i)=>{
+          card.style.opacity='0';
+          card.style.transform='perspective(600px) rotateY(20deg) scale(.8)';
+          setTimeout(()=>{
+            card.style.transition='all .6s cubic-bezier(.22,1,.36,1)';
+            card.style.opacity='1';
+            card.style.transform='';
+          },i*120);
+        });
+        roiObserver.unobserve(entry.target);
+      }
+    });
+  },{threshold:.3});
+  const roiResults=document.querySelector('.roi-results');
+  if(roiResults) roiObserver.observe(roiResults);
+
+})();
+
 // ========== FLOATING MIRROR BG — REMOVED ==========
 (function(){
   return; // disabled
