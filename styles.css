@@ -188,19 +188,59 @@ body::after{
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,26,46,.93) 0%,rgba(10,26,46,.8) 40%,rgba(10,26,46,.4) 100%);z-index:1}
 @media(max-width:768px){.hero-overlay{background:linear-gradient(to bottom,rgba(10,26,46,.92) 0%,rgba(10,26,46,.85) 50%,rgba(10,26,46,.7) 100%)}}
 .hero::before{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(200,168,75,.06) 0%,transparent 70%);pointer-events:none}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:0;align-items:center;max-width:760px;margin:0 auto;text-align:center}
 .hero .container{position:relative;z-index:3}
 .hero-content{color:var(--white)}
 .hero-badge{display:inline-block;padding:8px 20px;border:1px solid rgba(200,168,75,.3);border-radius:30px;color:var(--gold);font-size:.85rem;font-weight:600;margin-bottom:24px;letter-spacing:1px}
 .hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;line-height:1.2;margin-bottom:20px;letter-spacing:-.03em}
 .hero h1 .gold-line{display:block;background:linear-gradient(135deg,var(--gold) 0%,#e8d48b 30%,#fff 50%,var(--gold) 70%,var(--gold-dark) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:heroGoldShift 6s ease-in-out infinite}
 @keyframes heroGoldShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.hero p{font-size:1.2rem;color:rgba(255,255,255,.75);margin-bottom:36px;max-width:500px;line-height:1.8}
-.hero-cta-row{display:flex;gap:16px;flex-wrap:wrap}
+.hero p{font-size:1.2rem;color:rgba(255,255,255,.75);margin-bottom:36px;max-width:600px;line-height:1.8;margin-right:auto;margin-left:auto}
+.hero-cta-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
 /* Hero mirror image */
 .hero-mirror-side{display:flex;justify-content:center;align-items:center;position:relative}
 .hero-mirror-img{max-width:340px;max-height:450px;width:100%;object-fit:contain;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 80px rgba(200,168,75,.15);transition:transform .5s ease-out;transform-style:preserve-3d}
 .hero-mirror-glow{position:absolute;inset:-20px;border-radius:40px;background:radial-gradient(ellipse,rgba(200,168,75,.12) 0%,transparent 70%);z-index:-1;animation:glowPulse 4s ease-in-out infinite}
+
+/* Instagram Frame Hero */
+.hero-insta-frame{
+  width:360px;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(200,168,75,.2);
+  overflow:hidden;
+  transform-style:preserve-3d;
+  transition:transform .15s ease-out;
+  border:1px solid rgba(200,168,75,.25);
+}
+.insta-frame-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  background:#fff;
+  direction:ltr;
+}
+.insta-avatar{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold) 0%,#f4a623 50%,#e0497a 100%);
+  border:2px solid transparent;
+  outline:2px solid rgba(200,168,75,.5);
+  outline-offset:1px;
+}
+.insta-meta{display:flex;flex-direction:column;flex:1}
+.insta-username{font-size:12px;font-weight:700;color:#0F2540;line-height:1.2}
+.insta-location{font-size:10px;color:#888;line-height:1.2}
+.insta-dots{font-size:16px;color:#555;letter-spacing:1px;line-height:1}
+.insta-photo-wrap{width:100%;aspect-ratio:1/1;overflow:hidden}
+.insta-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.insta-frame-footer{
+  padding:10px 14px 12px;
+  background:#fff;
+  direction:ltr;
+}
+.insta-actions{display:flex;gap:14px;font-size:20px;margin-bottom:6px;color:#333}
+.insta-heart{cursor:pointer}
+.insta-likes{font-size:12px;font-weight:700;color:#0F2540;margin-bottom:4px}
+.insta-caption{font-size:11px;color:#333;line-height:1.4}
 @keyframes glowPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.03)}}
 
 /* Floating particles */
@@ -768,7 +808,7 @@ img{image-rendering:auto}
 
 /* ── Hero 3D Mirror Parallax ── */
 .hero-mirror-side{perspective:1200px;perspective-origin:50% 50%}
-.hero-mirror-img{
+.hero-mirror-img,.hero-insta-frame{
   transform-style:preserve-3d;
   transition:transform .15s ease-out;
   will-change:transform;

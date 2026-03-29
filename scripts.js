@@ -151,7 +151,7 @@ if(editorArea&&iphoneShell){
 }
 
 // ========== HERO MIRROR 3D TILT ==========
-const heroImg=document.querySelector('.hero-mirror-img');
+const heroImg=document.querySelector('.hero-insta-frame')||document.querySelector('.hero-mirror-img');
 if(heroImg){
   const heroSide=document.querySelector('.hero-mirror-side');
   heroSide.style.perspective='800px';
@@ -847,7 +847,7 @@ const _origToggle=typeof toggleMobileMenu==='function'?toggleMobileMenu:null;
 
   // ── Hero mirror: enhanced parallax with reflection ──
   const heroSide=document.querySelector('.hero-mirror-side');
-  const heroImg=document.querySelector('.hero-mirror-img');
+  const heroImg=document.querySelector('.hero-insta-frame')||document.querySelector('.hero-mirror-img');
   if(heroSide&&heroImg){
     heroSide.addEventListener('mousemove',e=>{
       const rect=heroSide.getBoundingClientRect();
